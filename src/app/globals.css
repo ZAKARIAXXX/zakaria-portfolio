@@ -7,8 +7,42 @@
   --foreground: #171717;
 }
 
+@media (min-width: 768px) {
+    html, body, a, button {
+        cursor: none !important;
+    }
+}
+
+.section{
+  @apply py-24 md:py-32 lg:py-40
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+.line{
+@apply overflow-hidden
+}
+.word{
+@apply translate-y-full
+}
+
+/* Dark mode starfield and shooting stars */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes shoot {
+  0% { transform: translateX(0) translateY(0) scaleX(1); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateX(-400px) translateY(-200px) scaleX(0.9); opacity: 0; }
+}
+
+.starfield { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.starfield .star { position: absolute; width: 2px; height: 2px; border-radius: 9999px; background: rgba(255,255,255,0.9); animation: twinkle 3s ease-in-out infinite; }
+.starfield .star--accent { background: #bc96ec; box-shadow: 0 0 6px #bc96ec; }
+.starfield .shooting-star { position: absolute; width: 120px; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0)); filter: drop-shadow(0 0 6px #ffffffaa); animation: shoot 2.2s linear infinite; transform-origin: left center; }
+.dark .starfield { mix-blend-mode: screen; }
