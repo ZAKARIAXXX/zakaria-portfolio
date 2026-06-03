@@ -4,16 +4,11 @@ import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
-function getSystemPrefersDark(): boolean {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-}
-
 function getInitialTheme(): Theme {
   if (typeof window === "undefined") return "light";
   const stored = window.localStorage.getItem("theme");
   if (stored === "light" || stored === "dark") return stored;
-  return getSystemPrefersDark() ? "dark" : "light";
+  return "light";
 }
 
 export default function ThemeToggle() {
