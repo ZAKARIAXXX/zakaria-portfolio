@@ -5,6 +5,7 @@ import image2 from "@/assets/images/project-2.jpg";
 import image3 from "@/assets/images/project-3.jpg";
 import image4 from "@/assets/images/project-4.jpg";
 import image5 from "@/assets/images/project-5.jpg";
+import waslaImage from "@/assets/images/wasla.png";
 
 export interface Project {
     name: string;
@@ -19,6 +20,17 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+    {
+        name: "Wasla CRM",
+        slug: "wasla-crm",
+        image: waslaImage,
+        year: 2026,
+        client: "Wasla (SaaS)",
+        role: "Full-Stack & AI Engineer",
+        description: "An AI-powered WhatsApp CRM and marketing automation platform built specifically for businesses operating in Moroccan Darija and French.",
+        challenge: "Small and medium businesses in Morocco rely heavily on WhatsApp to close sales, but managing hundreds of chats manually leads to missed leads, slow replies, and lost revenue. Existing global CRMs lack localization and fail to understand Moroccan Darija (the spoken Arabic dialect) and French hybrid text, making automated customer service ineffective.",
+        solution: "Designed and built Wasla, featuring Karima AI — a custom conversational agent trained to understand, qualify, and reply to customers in natural Moroccan Darija and French. Implemented a drag-and-drop Kanban pipeline for tracking deals, automated cron-scheduled follow-up sequences to re-engage dormant leads, real-time message sync using WebSockets, and rich analytics dashboards to monitor conversion rates and agent response performance."
+    },
     {
         name: "Artisan Brew Co.",
         slug: "artisan-brew-co",
