@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function Cursor() {
+    const [mounted, setMounted] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
 
     // Mouse position
@@ -16,6 +17,7 @@ export default function Cursor() {
     const cursorY = useSpring(mouseY, springConfig);
 
     useEffect(() => {
+        setMounted(true);
         const moveCursor = (e: MouseEvent) => {
             mouseX.set(e.clientX);
             mouseY.set(e.clientY);
@@ -42,6 +44,8 @@ export default function Cursor() {
             window.removeEventListener('mouseover', handleMouseOver);
         };
     }, [mouseX, mouseY]);
+
+    if (!mounted) return null;
 
     return (
         <motion.div

@@ -30,7 +30,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`antialiased bg-stone-200 text-stone-900 dark:bg-night dark:text-cream-100 ${archivo.variable} ${syne.variable} font-sans`}>
+      <body
+        suppressHydrationWarning
+        className={`antialiased bg-stone-200 text-stone-900 dark:bg-night dark:text-cream-100 ${archivo.variable} ${syne.variable} font-sans`}
+      >
         <Cursor />
         {children}
       </body>

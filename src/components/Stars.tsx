@@ -6,8 +6,8 @@ type Star = {
   left: string;
   top: string;
   size: number;
-  delay: number;
-  duration: number;
+  delay: string;
+  duration: string;
   accent: boolean;
 };
 
@@ -15,7 +15,7 @@ function generateStars(count: number, seed: number): Star[] {
   const stars: Star[] = [];
   let x = seed;
   const rand = () => {
-    // Simple xorshift-like pseudo-random for deterministic client-side gen
+    // Simple xorshift-like pseudo-random for deterministic generation
     x ^= x << 13;
     x ^= x >> 17;
     x ^= x << 5;
@@ -23,21 +23,25 @@ function generateStars(count: number, seed: number): Star[] {
     return ((x >>> 0) % 1000) / 1000;
   };
   for (let i = 0; i < count; i++) {
+    const leftVal = (rand() * 100).toFixed(1);
+    const topVal = (rand() * 100).toFixed(1);
+    const delayVal = (rand() * 3).toFixed(2);
+    const durationVal = (2 + rand() * 3).toFixed(2);
     stars.push({
-      left: `${rand() * 100}%`,
-      top: `${rand() * 100}%`,
+      left: `${leftVal}%`,
+      top: `${topVal}%`,
       size: Math.max(1, Math.round(rand() * 2)),
-      delay: rand() * 3,
-      duration: 2 + rand() * 3,
+      delay: `${delayVal}s`,
+      duration: `${durationVal}s`,
       accent: rand() > 0.85,
     });
   }
   return stars;
 }
 
-export default function Stars() {
-  const stars = useMemo(() => generateStars(80, Date.now() & 0xffff), []);
-  const shooters = useMemo(() => generateStars(3, (Date.now() >> 8) & 0xffff), []);
+export default function Stars({ seed = 42 }: { seed?: number }) {
+  const stars = useMemo(() => generateStars(80, seed), [seed]);
+  const shooters = useMemo(() => generateStars(3, seed + 1000), [seed]);
 
   return (
     <div className="starfield">
@@ -45,14 +49,25 @@ export default function Stars() {
         <div
           key={`star-${i}`}
           className={`star ${s.accent ? "star--accent" : ""}`}
-          style={{ left: s.left, top: s.top, width: s.size, height: s.size, animationDelay: `${s.delay}s`, animationDuration: `${s.duration}s` }}
+          style={{
+            left: s.left,
+            top: s.top,
+            width: `${s.size}px`,
+            height: `${s.size}px`,
+            animationDelay: s.delay,
+            animationDuration: s.duration,
+          }}
         />
       ))}
       {shooters.map((s, i) => (
         <div
           key={`shoot-${i}`}
           className="shooting-star"
-          style={{ left: s.left, top: s.top, animationDelay: `${i * 1.2}s` }}
+          style={{
+            left: s.left,
+            top: s.top,
+            animationDelay: `${(i * 1.2).toFixed(1)}s`,
+          }}
         />
       ))}
     </div>

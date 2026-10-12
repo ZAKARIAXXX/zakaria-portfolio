@@ -6,6 +6,8 @@ import image3 from "@/assets/images/project-3.jpg";
 import image4 from "@/assets/images/project-4.jpg";
 import image5 from "@/assets/images/project-5.jpg";
 import waslaImage from "@/assets/images/wasla.png";
+import botanicaImage from "@/assets/images/image.png";
+import aubeImage from "@/assets/images/aube-cafe.png";
 
 export interface Project {
     name: string;
@@ -17,6 +19,9 @@ export interface Project {
     description: string;
     challenge: string;
     solution: string;
+    link?: string;
+    features?: string[];
+    category?: string;
 }
 
 export const projects: Project[] = [
@@ -32,15 +37,25 @@ export const projects: Project[] = [
         solution: "Designed and built Wasla, featuring Karima AI — a custom conversational agent trained to understand, qualify, and reply to customers in natural Moroccan Darija and French. Implemented a drag-and-drop Kanban pipeline for tracking deals, automated cron-scheduled follow-up sequences to re-engage dormant leads, real-time message sync using WebSockets, and rich analytics dashboards to monitor conversion rates and agent response performance."
     },
     {
-        name: "Artisan Brew Co.",
-        slug: "artisan-brew-co",
-        image: image1,
-        year: 2024,
-        client: "Artisan Brew Co.",
-        role: "Brand Identity & Website",
-        description: "A complete digital rebranding for a craft brewery focused on organic ingredients and traditional brewing methods.",
-        challenge: "The brand needed to modernize its image while retaining its artisanal roots. The previous website was outdated and didn't reflect the premium quality of their products.",
-        solution: "We developed a warm, earthy color palette and a clean, typography-driven website that puts the product photography front and center. The new site includes an age-gate, a store locator, and an immersive 'Our Process' section."
+        name: "Aube Café",
+        slug: "aube-cafe",
+        image: aubeImage,
+        year: 2026,
+        client: "Aube Café (Rabat)",
+        role: "Web Design & Frontend Development",
+        link: "https://aube-cafe.vercel.app/",
+        category: "Hospitality / UI & UX",
+        description: "An immersive, responsive website for Aube Café, a specialty coffee house in Rabat. Showcases premium coffee brews, artisanal pastries, brand heritage, and seamless WhatsApp ordering.",
+        challenge: "Specialty coffee shops require a distinct digital identity that captures their physical ambiance, artisanal roasting process, and premium quality while remaining accessible and convenient for local customers in Rabat.",
+        solution: "Crafted a visual-first digital storefront with a warm dark aesthetic, interactive menu categories, brand origin story, photo gallery, location details, and instant WhatsApp ordering pre-configured with French and Moroccan Darija language options.",
+        features: [
+            "Immersive specialty coffee digital experience with modern typography",
+            "Interactive menu showcasing specialty espresso, filter coffee, and pastries",
+            "Bilingual French and Moroccan Darija content toggle",
+            "One-click WhatsApp ordering and customer contact shortcuts",
+            "Location details, opening hours, and Rabat cafe directions",
+            "Mobile-first responsive design tailored for smooth performance"
+        ]
     },
     {
         name: "Wavelength Studios",
@@ -54,15 +69,27 @@ export const projects: Project[] = [
         solution: "We integrated a custom audio visualizer into the hero section and created an interactive project gallery where sound samples play on hover. The dark mode aesthetic reflects the studio environment."
     },
     {
-        name: "Nova Fitness",
-        slug: "nova-fitness",
-        image: image3,
-        year: 2023,
-        client: "Nova Fitness",
-        role: "Mobile App Design",
-        description: "A holistic fitness tracking app that combines workout logging with mental wellness content.",
-        challenge: "The fitness app market is saturated. Nova needed a unique feature set and a UI that felt calming rather than aggressive.",
-        solution: "We focused on 'Mindful Movement', designing an interface with soft gradients, rounded corners, and micro-interactions that reward consistency. The result is an app that feels like a personal wellness companion."
+        name: "Botanica Skincare",
+        slug: "botanica-skincare",
+        image: botanicaImage,
+        year: 2025,
+        client: "Botanica Skincare",
+        role: "E-commerce & Frontend Development",
+        link: "https://cosm-nine.vercel.app/",
+        category: "E-commerce / UI & UX",
+        description: "A modern, responsive e-commerce storefront for a Moroccan natural cosmetics brand. The website showcases eight botanical products, communicates product benefits and pricing, and lets customers place pre-filled orders directly through WhatsApp.",
+        challenge: "In the Moroccan cosmetics market, traditional online checkouts and upfront credit card payments often create friction and high cart abandonment due to consumer trust barriers. Customers prefer direct communication, instant reassurance, cash-on-delivery (COD), and familiar channels like WhatsApp. The challenge was to design a visually captivating, luxury skincare storefront that builds instant trust while offering a frictionless ordering flow without requiring traditional payment gateways.",
+        solution: "Designed and developed a polished, mobile-first e-commerce landing page featuring a complete product catalogue with eight botanical skincare treatments, transparent promotional pricing, and dynamic WhatsApp order links that pre-fill the cart details and pricing into messages. Integrated trust-building sections highlighting nationwide 24–48h Moroccan delivery, cash-on-delivery reassurance, customer reviews, a brand storytelling section highlighting Moroccan botanical ingredients, an interactive FAQ, and Darija-oriented local commerce elements.",
+        features: [
+            "Responsive premium skincare interface optimized for desktop and mobile",
+            "Eight product cards with detailed descriptions, sizing, and promotional prices",
+            "One-click WhatsApp ordering with dynamic pre-filled purchase messages",
+            "Cash-on-delivery (COD) and nationwide Moroccan delivery (24–48h) details",
+            "Brand story section focused on pure Moroccan botanical ingredients",
+            "Customer reviews and trust-building social proof",
+            "Interactive FAQ section addressing ordering, delivery, and payment questions",
+            "French-language storefront tailored with Moroccan Darija local-market positioning"
+        ]
     },
     {
         name: "Urban Plates",

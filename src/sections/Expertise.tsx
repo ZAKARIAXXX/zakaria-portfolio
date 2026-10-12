@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useAnimate, stagger } from "framer-motion";
 import SplitType from "split-type";
 
@@ -33,14 +33,44 @@ const skills = [
 
 const Expertise: FC = () => {
     const targetRef = useRef<HTMLDivElement>(null);
+    const cardsContainerRef = useRef<HTMLDivElement>(null);
     const [titleScope, titleAnimate] = useAnimate();
+
+    // Responsive initial estimate so there's no layout flash on mount
+    const [maxScroll, setMaxScroll] = useState(() => {
+        if (typeof window === "undefined") return 1000;
+        const w = window.innerWidth;
+        return w < 768 ? Math.round(w * 2.6) : Math.round(w * 0.55);
+    });
 
     const { scrollYProgress } = useScroll({
         target: targetRef,
         offset: ["start start", "end end"] // Track scroll while component is in view
     });
 
-    const x = useTransform(scrollYProgress, [0, 1], ["1%", "-50%"]);
+    // Accurately measure the actual DOM scrollWidth and viewport width
+    useEffect(() => {
+        const calculateScrollRange = () => {
+            if (!cardsContainerRef.current) return;
+            const totalWidth = cardsContainerRef.current.scrollWidth;
+            const viewportWidth = window.innerWidth;
+            // Ensure comfortable right padding so the last card finishes cleanly in view
+            const extraPadding = viewportWidth < 768 ? 32 : 80;
+            const scrollDistance = Math.max(0, totalWidth - viewportWidth + extraPadding);
+            setMaxScroll(scrollDistance);
+        };
+
+        calculateScrollRange();
+        window.addEventListener("resize", calculateScrollRange);
+        const timer = setTimeout(calculateScrollRange, 150);
+
+        return () => {
+            window.removeEventListener("resize", calculateScrollRange);
+            clearTimeout(timer);
+        };
+    }, []);
+
+    const x = useTransform(scrollYProgress, [0, 1], [0, -maxScroll]);
 
     useEffect(() => {
         if (!titleScope.current) return;
@@ -76,11 +106,11 @@ const Expertise: FC = () => {
                 </div>
 
                 {/* Horizontal Scroll Cards */}
-                <motion.div style={{ x }} className="flex gap-8 px-6 md:px-20">
+                <motion.div ref={cardsContainerRef} style={{ x }} className="flex gap-6 sm:gap-8 px-6 md:px-20">
                     {skills.map((skill, index) => (
                         <div
                             key={skill.title}
-                            className="flex-shrink-0 w-[85vw] md:w-[40vw] lg:w-[30vw] min-h-[450px] bg-stone-800/50 backdrop-blur-sm rounded-3xl p-8 border border-stone-700 hover:border-red-orange-500 transition-colors duration-500 group flex flex-col justify-between"
+                            className="flex-shrink-0 w-[85vw] md:w-[40vw] lg:w-[30vw] min-h-[420px] sm:min-h-[450px] bg-stone-800/50 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-stone-700 hover:border-red-orange-500 transition-colors duration-500 group flex flex-col justify-between"
                         >
                             <div className="space-y-4">
                                 <div className="flex justify-between items-start">
