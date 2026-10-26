@@ -50,7 +50,7 @@ const Header: FC = () => {
   return (
     <header>
       <div
-        className="fixed top-0 left-0 w-full h-0 bg-stone-900 z-10 overflow-hidden"
+        className="fixed top-0 left-0 w-full h-0 bg-stone-950/95 dark:bg-night/95 backdrop-blur-2xl z-10 overflow-hidden transition-colors duration-300"
         ref={navScope}
       >
         <nav className="mt-20 flex flex-col">
@@ -86,31 +86,28 @@ const Header: FC = () => {
         </nav>
       </div>
 
-      {/* Top Navigation Bar */}
-      <div className="fixed top-0 left-0 w-full mix-blend-difference z-10 backdrop-blur-md">
+      {/* Unified Top Navigation Bar */}
+      <div className="fixed top-0 left-0 w-full z-20 bg-stone-200/80 dark:bg-night/85 backdrop-blur-md border-b border-stone-300/40 dark:border-white/5 transition-colors duration-300">
         <div className="container max-w-full">
           <div className="flex justify-between h-20 items-center">
+            {/* Brand Logo */}
             <div>
-              <a href="/" aria-label="Home">
-                <span className="text-xl font-bold uppercase text-white">
+              <a href="/" aria-label="Home" className="group inline-block">
+                <span className="text-xl font-bold uppercase tracking-tight text-stone-900 dark:text-white transition-opacity group-hover:opacity-75">
                   zakaria chelouati
                 </span>
               </a>
             </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Menu Toggle + Contact Button */}
-      <div className="fixed top-0 left-0 w-full z-10">
-        <div className="container max-w-full">
-          <div className="flex justify-end h-20 items-center">
-            <div className="flex items-center gap-4">
+            {/* Navigation Controls */}
+            <div className="flex items-center gap-3 sm:gap-4">
               <ThemeToggle />
+
               {/* Hamburger Menu */}
               <div
-                className="size-11 border border-stone-400 rounded-full inline-flex items-center justify-center bg-stone-200 cursor-pointer"
+                className="size-11 border border-stone-400 dark:border-stone-700 rounded-full inline-flex items-center justify-center bg-stone-200 text-stone-900 dark:bg-stone-800 dark:text-cream-100 hover:bg-stone-300 dark:hover:bg-stone-700 transition-colors cursor-pointer"
                 onClick={() => setIsOpen(!isOpen)}
+                aria-label="Toggle navigation menu"
               >
                 <svg
                   width="24"
@@ -140,7 +137,7 @@ const Header: FC = () => {
                 </svg>
               </div>
 
-              {/* Contact Button with mailto link */}
+              {/* Contact Button */}
               <a href="mailto:wailaminzzaakkaarriiaa@gmail.com">
                 <Button variant="primary" className="hidden md:inline-flex">
                   Contact Me
