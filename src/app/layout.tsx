@@ -1,8 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Archivo, Syne } from "next/font/google";
 import "./globals.css";
 
 import Cursor from "@/components/Cursor";
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#e7e5e4" },
+    { media: "(prefers-color-scheme: dark)", color: "#210b2c" },
+  ],
+  width: "device-width",
+  initialScale: 1,
+};
 
 const archivo = Archivo({
   display: "swap",
@@ -19,8 +28,8 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  title: "Minimal Single Page Portfolio",
-  description: "Created with Frontend Tribe",
+  title: "Zakaria Chelouati • Portfolio",
+  description: "AI Tools, SaaS Products & High-Performance Modern Web Experiences",
 };
 
 export default function RootLayout({
