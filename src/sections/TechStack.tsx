@@ -64,13 +64,13 @@ const TechStack: FC = () => {
 
                 <div className="container relative z-10 h-full flex flex-col justify-center">
                     {/* Header */}
-                    <div className="mb-6 sm:mb-8 md:mb-12 text-center md:text-left">
-                        <h2 ref={titleScope} className="flex flex-col items-center md:items-start leading-none">
-                            <span className="text-sm sm:text-base md:text-xl text-violet-500 font-mono mb-2 tracking-widest uppercase font-semibold">
+                    <div className="mb-8 md:mb-12">
+                        <h2 ref={titleScope} className="flex flex-col items-start leading-none">
+                            <span className="text-xl md:text-2xl text-red-orange-500 font-mono mb-2 tracking-widest uppercase">
                                 My Arsenal
                             </span>
-                            <span className="text-4xl sm:text-6xl md:text-8xl font-syne font-bold tracking-tighter uppercase text-stone-900 dark:text-white">
-                                Tech Stack<span className="text-violet-500">.</span>
+                            <span className="text-5xl md:text-8xl font-syne font-bold tracking-tighter uppercase text-stone-900 dark:text-cream-100">
+                                Tech Stack<span className="text-red-orange-500">.</span>
                             </span>
                         </h2>
                     </div>
