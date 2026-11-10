@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { FC, useRef } from "react";
+import { FC } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { projects } from "@/data/projects";
 
 const Projects: FC = () => {
@@ -11,11 +11,11 @@ const Projects: FC = () => {
     <section className="section bg-stone-100/50" id="projects">
       <div className="container">
         <h2 className="flex flex-col items-start leading-none mb-10 md:mb-16 lg:mb-20">
-          <span className="text-xl md:text-2xl text-red-orange-500 font-mono mb-2 tracking-widest uppercase">
+          <span className="text-xl md:text-2xl text-lavender-500 font-mono mb-2 tracking-widest uppercase">
             Real World Results
           </span>
           <span className="text-5xl md:text-8xl font-syne font-bold tracking-tighter uppercase text-stone-900">
-            Selected Works<span className="text-red-orange-500">.</span>
+            Selected Works<span className="text-lavender-500">.</span>
           </span>
         </h2>
         <div className="">
@@ -49,7 +49,7 @@ const ProjectItem = ({ project }: { project: (typeof projects)[0] }) => {
     <Link
       href={`/projects/${slug}`}
       onMouseMove={handleMouseMove}
-      className="group/project relative flex flex-col border-t border-stone-400 border-dotted py-6 md:py-8 lg:py-10 last:border-b cursor-none"
+      className="group/project relative flex flex-col border-t border-stone-400 border-dotted py-6 md:py-8 lg:py-10 last:border-b"
     >
       {/* Hover Background - Subtle gradient shift */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -70,7 +70,6 @@ const ProjectItem = ({ project }: { project: (typeof projects)[0] }) => {
 
         {/* Content Row */}
         <div className="flex justify-between items-center md:grid md:[grid-template-columns:1fr_300px_max-content]">
-
           {/* Project Name */}
           <div className="relative overflow-hidden">
             <motion.h3
@@ -85,7 +84,7 @@ const ProjectItem = ({ project }: { project: (typeof projects)[0] }) => {
 
           {/* Spacer / Description Area (Optional) */}
           <div className="hidden md:block">
-            <span className="text-stone-400 group-hover/project:text-stone-600 transition-colors duration-300 text-sm opacity-0 group-hover/project:opacity-100 transform translate-y-2 group-hover/project:translate-y-0 transition-all">
+            <span className="text-stone-400 group-hover/project:text-stone-600 transition-colors duration-300 text-sm">
               View Case Study
             </span>
           </div>
@@ -152,7 +151,7 @@ const ProjectItem = ({ project }: { project: (typeof projects)[0] }) => {
 
         {/* "View Project" Button - Floating on top of image */}
         <div
-          className="absolute bg-red-orange-500 text-white rounded-full size-20 flex items-center justify-center font-bold text-sm uppercase tracking-wide shadow-lg border-2 border-white backdrop-blur-md"
+          className="absolute bg-lavender-500 text-white rounded-full size-20 flex items-center justify-center font-bold text-sm uppercase tracking-wide shadow-lg border-2 border-white backdrop-blur-md"
           style={{
             top: "50%",
             left: "50%",

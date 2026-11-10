@@ -11,40 +11,52 @@ const Intro: FC = () => {
   });
 
   useEffect(() => {
-    if (!scope.current) return;
+    if (!inView) return;
 
-    new SplitType(scope.current.querySelector("h2"), {
-      types: "lines,words",
-      tagName: "span",
-    });
-  }, [scope]);
+    const section = scope.current;
+    const heading = section?.querySelector("h2");
+    if (!section || !heading) return;
 
-  useEffect(() => {
-    if (inView) {
+    const frame = requestAnimationFrame(() => {
+      new SplitType(heading, {
+        types: "lines,words",
+        tagName: "span",
+      });
+
       animate(
-        scope.current?.querySelectorAll(".word"),
+        section.querySelectorAll(".word"),
         {
           transform: "translateY(0%)",
-          opacity: 1, // Added for better animation visibility
+          opacity: 1,
         },
         {
           duration: 0.5,
           delay: stagger(0.2),
-        }
+        },
       );
-    }
+    });
+
+    return () => cancelAnimationFrame(frame);
   }, [inView, animate, scope]);
 
   return (
-    <section className="section md:mt-16 lg:mt-20 mt-12 relative" id="intro" ref={scope}>
+    <section
+      className="section md:mt-16 lg:mt-20 mt-12 relative"
+      id="intro"
+      ref={scope}
+    >
       <div className="hidden dark:block absolute inset-0 -z-10">
         <Stars />
       </div>
       <div className="container">
-      <h2 className="text-4xl md:text-7xl lg:text-8xl lg:w-[80%]">
-  I design and build modern <span className="text-red-orange-500">AI-powered</span> web applications focused on <span className="text-red-orange-500">performance</span>,{" "}
-  <span className="text-red-orange-500">usability</span>, and real <span className="text-red-orange-500">business impact</span>.
-</h2>
+        <h2 className="text-4xl md:text-7xl lg:text-8xl lg:w-[80%]">
+          I design and build modern{" "}
+          <span className="text-lavender-500">AI-powered</span> web
+          applications focused on{" "}
+          <span className="text-lavender-500">performance</span>,{" "}
+          <span className="text-lavender-500">usability</span>, and real{" "}
+          <span className="text-lavender-500">business impact</span>.
+        </h2>
       </div>
     </section>
   );

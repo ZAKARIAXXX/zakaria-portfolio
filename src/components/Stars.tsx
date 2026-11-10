@@ -73,7 +73,3 @@ export default function Stars({ seed = 42 }: { seed?: number }) {
     </div>
   );
 }
-
-
-
-

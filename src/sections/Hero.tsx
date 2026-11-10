@@ -5,10 +5,18 @@ import Stars from "@/components/Stars";
 import heroImage from "@/assets/images/hero-image.jpg.jpeg";
 import Button from "@/components/Button";
 import SplitType from "split-type";
-import { useAnimate, motion, stagger, useScroll, useTransform } from "framer-motion";
+import {
+  useAnimate,
+  motion,
+  stagger,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion";
 
 const Hero: FC = () => {
   const [titleScope, titleAnimate] = useAnimate();
+  const shouldReduceMotion = useReducedMotion();
   const scrollingDiv = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: scrollingDiv,
@@ -17,25 +25,30 @@ const Hero: FC = () => {
   const portraitWidth = useTransform(scrollYProgress, [0, 1], ["100%", "240%"]);
 
   useEffect(() => {
-    if (!titleScope.current) return;
+    const element = titleScope.current;
+    if (!element) return;
 
-    new SplitType(titleScope.current, {
-      types: "lines,words",
-      tagName: "span",
+    const frame = requestAnimationFrame(() => {
+      new SplitType(element, {
+        types: "lines,words",
+        tagName: "span",
+      });
+
+      titleAnimate(
+        element.querySelectorAll(".word"),
+        {
+          transform: "translateY(0)",
+          opacity: 1,
+        },
+        {
+          duration: 0.5,
+          delay: stagger(0.2),
+        },
+      );
     });
 
-    titleAnimate(
-      titleScope.current.querySelectorAll(".word"),
-      {
-        transform: "translateY(0)",
-        opacity: 1,
-      },
-      {
-        duration: 0.5,
-        delay: stagger(0.2),
-      }
-    );
-  }, [titleAnimate]);
+    return () => cancelAnimationFrame(frame);
+  }, [titleAnimate, titleScope]);
 
   return (
     <section className="relative overflow-x-clip">
@@ -68,8 +81,8 @@ const Hero: FC = () => {
               ref={titleScope}
             >
               I Build AI Tools, SaaS Products &amp;{" "}
-              <span className="text-red-orange-500">High-Performance</span>{" "}
-              <span className="text-red-orange-500">Modern</span> Web
+              <span className="text-lavender-500">High-Performance</span>{" "}
+              <span className="text-lavender-500">Modern</span> Web
               Experiences
             </motion.h1>
 
@@ -82,30 +95,29 @@ const Hero: FC = () => {
                   delay: 1.75,
                 }}
               >
-                <a href="#projects" className="inline-block">
-                  <Button
-                    variant="secondary"
-                    iconAfter={
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="w-5 h-5"
-                        aria-hidden="true"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4.5 5.25l7.5 7.5 7.5-7.5m-15 6l7.5 7.5 7.5-7.5"
-                        />
-                      </svg>
-                    }
-                  >
-                    <span>View My Work</span>
-                  </Button>
-                </a>
+                <Button
+                  href="#projects"
+                  variant="secondary"
+                  iconAfter={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M4.5 5.25l7.5 7.5 7.5-7.5m-15 6l7.5 7.5 7.5-7.5"
+                      />
+                    </svg>
+                  }
+                >
+                  <span>View My Work</span>
+                </Button>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: "100%" }}
@@ -115,9 +127,9 @@ const Hero: FC = () => {
                   delay: 2.2,
                 }}
               >
-                <a href="#contact" className="inline-block">
-                  <Button variant="text">Contact Me</Button>
-                </a>
+                <Button href="#contact" variant="text">
+                  Contact Me
+                </Button>
               </motion.div>
             </div>
           </div>
@@ -134,7 +146,7 @@ const Hero: FC = () => {
           >
             <div className="relative mx-auto max-w-[340px] group">
               {/* Ambient Glow */}
-              <div className="absolute -inset-1.5 bg-gradient-to-tr from-red-orange-500/40 via-purple-600/30 to-amber-500/20 rounded-[2rem] blur-xl opacity-75 dark:opacity-60 transition duration-700 group-hover:opacity-100 -z-10" />
+              <div className="absolute -inset-1.5 bg-gradient-to-tr from-lavender-500/40 via-purple-600/30 to-amber-500/20 rounded-[2rem] blur-xl opacity-75 dark:opacity-60 transition duration-700 group-hover:opacity-100 -z-10" />
 
               {/* Framed Portrait Card */}
               <div className="relative aspect-[4/5] w-full rounded-[1.75rem] overflow-hidden border border-stone-200/80 dark:border-white/10 bg-stone-900 shadow-2xl">
@@ -154,7 +166,9 @@ const Hero: FC = () => {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                   </span>
-                  <span className="text-[11px] font-medium tracking-wide">Available</span>
+                  <span className="text-[11px] font-medium tracking-wide">
+                    Available
+                  </span>
                 </div>
 
                 {/* Bottom Floating Info Pill */}
@@ -169,7 +183,7 @@ const Hero: FC = () => {
                   </div>
                   <a
                     href="#contact"
-                    className="size-8 rounded-full bg-red-orange-500/20 border border-red-orange-500/40 flex items-center justify-center text-red-orange-500 hover:bg-red-orange-500 hover:text-white transition-colors"
+                    className="size-8 rounded-full bg-lavender-500/20 border border-lavender-500/40 flex items-center justify-center text-lavender-500 hover:bg-lavender-500 hover:text-white transition-colors"
                     aria-label="Contact Zakaria"
                   >
                     <svg
@@ -194,7 +208,7 @@ const Hero: FC = () => {
           <motion.div
             className="hidden md:block md:size-full md:absolute md:right-0"
             style={{
-              width: portraitWidth,
+              width: shouldReduceMotion ? "100%" : portraitWidth,
             }}
           >
             <Image

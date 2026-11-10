@@ -1,6 +1,7 @@
 "use client";
 
 import { FC, useEffect, useState } from "react";
+import Link from "next/link";
 import Button from "@/components/Button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { motion, useAnimate } from "framer-motion";
@@ -24,14 +25,25 @@ const Header: FC = () => {
   useEffect(() => {
     if (isOpen) {
       topLineAnimate(topLineScope.current, { translateY: 4, rotate: 45 });
-      bottomLineAnimate(bottomLineScope.current, { translateY: -4, rotate: -45 });
+      bottomLineAnimate(bottomLineScope.current, {
+        translateY: -4,
+        rotate: -45,
+      });
       navAnimate(navScope.current, { height: "100%" }, { duration: 0.7 });
     } else {
       topLineAnimate(topLineScope.current, { translateY: 0, rotate: 0 });
       bottomLineAnimate(bottomLineScope.current, { translateY: 0, rotate: 0 });
       navAnimate(navScope.current, { height: "0%" }, { duration: 0.5 });
     }
-  }, [isOpen, topLineAnimate, bottomLineAnimate, navAnimate, topLineScope, bottomLineScope, navScope]);
+  }, [
+    isOpen,
+    topLineAnimate,
+    bottomLineAnimate,
+    navAnimate,
+    topLineScope,
+    bottomLineScope,
+    navScope,
+  ]);
 
   // Handle mobile nav item click
   const handleClickMobileNavItem = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -44,7 +56,12 @@ const Header: FC = () => {
     const target = document.querySelector(hash);
     if (!target) return;
 
-    target.scrollIntoView({ behavior: "smooth" });
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    target.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
   };
 
   return (
@@ -92,11 +109,11 @@ const Header: FC = () => {
           <div className="flex justify-between h-20 items-center">
             {/* Brand Logo */}
             <div>
-              <a href="/" aria-label="Home" className="group inline-block">
+              <Link href="/" aria-label="Home" className="group inline-block">
                 <span className="text-xl font-bold uppercase tracking-tight text-stone-900 dark:text-white transition-opacity group-hover:opacity-75">
                   zakaria chelouati
                 </span>
-              </a>
+              </Link>
             </div>
 
             {/* Navigation Controls */}
@@ -104,10 +121,12 @@ const Header: FC = () => {
               <ThemeToggle />
 
               {/* Hamburger Menu */}
-              <div
+              <button
+                type="button"
                 className="size-11 border border-stone-400 dark:border-stone-700 rounded-full inline-flex items-center justify-center bg-stone-200 text-stone-900 dark:bg-stone-800 dark:text-cream-100 hover:bg-stone-300 dark:hover:bg-stone-700 transition-colors cursor-pointer"
                 onClick={() => setIsOpen(!isOpen)}
                 aria-label="Toggle navigation menu"
+                aria-expanded={isOpen}
               >
                 <svg
                   width="24"
@@ -135,14 +154,16 @@ const Header: FC = () => {
                     style={{ transformOrigin: "12px 16px" }}
                   />
                 </svg>
-              </div>
+              </button>
 
               {/* Contact Button */}
-              <a href="mailto:wailaminzzaakkaarriiaa@gmail.com">
-                <Button variant="primary" className="hidden md:inline-flex">
-                  Contact Me
-                </Button>
-              </a>
+              <Button
+                href="mailto:wailaminzzaakkaarriiaa@gmail.com"
+                variant="primary"
+                className="hidden md:inline-flex"
+              >
+                Contact Me
+              </Button>
             </div>
           </div>
         </div>

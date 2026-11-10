@@ -12,14 +12,17 @@ const navItems = [
 ];
 
 const Footer: FC = () => {
-  const handleClickNavItem = (e: MouseEvent<HTMLAnchorElement>) => {
+  const handleClickNavItem = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
     const targetId = e.currentTarget.getAttribute("href")?.substring(1); // Remove '#'
 
     const targetElement = document.getElementById(targetId ?? "");
     if (targetElement) {
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
       targetElement.scrollIntoView({
-        behavior: "smooth",
+        behavior: prefersReducedMotion ? "auto" : "smooth",
         block: "start",
       });
     }
@@ -40,63 +43,65 @@ const Footer: FC = () => {
               <h2 className="text-4xl md:text-7xl lg:text-8xl font-extralight">
                 Enough talk. Let’s make something great together.
               </h2>
-              <div className="flex items-center gap-4 mt-8"> {/* Flex container for buttons */}
-                <a href="mailto:wailaminzzaakkaarriiaa@gmail.com">
-                  <Button variant="secondary">
-                    <span className="inline-flex items-center gap-2">
-                      Contact Me
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M5 12h14" />
-                        <path d="M12 5l7 7-7 7" />
-                      </svg>
-                    </span>
-                  </Button>
-                </a>
-                <a href="/resume.pdf" download> {/* Placeholder resume link */}
-                  <Button variant="secondary">
-                    <span className="inline-flex items-center gap-2">
-                      Download Resume
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                        <polyline points="7 10 12 15 17 10" />
-                        <line x1="12" y1="15" x2="12" y2="3" />
-                      </svg>
-                    </span>
-                  </Button>
-                </a>
+              <div className="flex items-center gap-4 mt-8">
+                {" "}
+                {/* Flex container for buttons */}
+                <Button
+                  href="mailto:wailaminzzaakkaarriiaa@gmail.com"
+                  variant="secondary"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    Contact Me
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M5 12h14" />
+                      <path d="M12 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </Button>
+                <Button href="/resume.pdf" download variant="secondary">
+                  <span className="inline-flex items-center gap-2">
+                    Download Resume
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                  </span>
+                </Button>
               </div>
             </div>
 
             <nav className="flex flex-col md:items-end gap-6 md:gap-8">
               {navItems.map(({ href, label }) => (
-                <a
+                <Button
                   href={href}
                   key={label}
                   onClick={handleClickNavItem}
+                  variant="text"
                   className="text-lg"
                 >
-                  <Button variant="text">{label}</Button>
-                </a>
+                  {label}
+                </Button>
               ))}
             </nav>
           </div>
@@ -105,7 +110,11 @@ const Footer: FC = () => {
         {/* Social Media Icons */}
         <div className="flex justify-center gap-6 pb-8">
           {/* Twitter/X Icon */}
-          <a href="https://twitter.com/yourprofile" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://twitter.com/yourprofile"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -122,7 +131,11 @@ const Footer: FC = () => {
             </svg>
           </a>
           {/* LinkedIn Icon */}
-          <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://linkedin.com/in/yourprofile"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -141,7 +154,11 @@ const Footer: FC = () => {
             </svg>
           </a>
           {/* Instagram Icon */}
-          <a href="https://instagram.com/yourprofile" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://instagram.com/yourprofile"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

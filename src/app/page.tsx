@@ -10,16 +10,18 @@ import TechStack from "@/sections/TechStack";
 import Testimonials from "@/sections/Testimonials";
 
 export default function Home() {
-  return <>
-    <Header />
-    <Hero />
-    <Intro />
-    <Expertise />
-    <Services />
-    <TechStack />
-    <Projects />
-    <Testimonials />
-    <FAQs />
-    <Footer />
-  </>;
+  return (
+    <>
+      <Header />
+      <Hero />
+      <Intro />
+      <Expertise />
+      <Services />
+      <TechStack />
+      <Projects />
+      <Testimonials />
+      <FAQs />
+      <Footer />
+    </>
+  );
 }
