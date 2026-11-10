@@ -50,12 +50,11 @@ const Intro: FC = () => {
       </div>
       <div className="container">
         <h2 className="text-4xl md:text-7xl lg:text-8xl lg:w-[80%]">
-          I design and build modern{" "}
-          <span className="text-lavender-500">AI-powered</span> web
-          applications focused on{" "}
-          <span className="text-lavender-500">performance</span>,{" "}
-          <span className="text-lavender-500">usability</span>, and real{" "}
-          <span className="text-lavender-500">business impact</span>.
+          I build <span className="text-lavender-500">backend systems</span> and{" "}
+          <span className="text-lavender-500">full-stack products</span> that{" "}
+          <span className="text-lavender-500">actually work</span>
+          {" — "}
+          <span className="text-lavender-500">fast, secure, and shipped</span>.
         </h2>
       </div>
     </section>

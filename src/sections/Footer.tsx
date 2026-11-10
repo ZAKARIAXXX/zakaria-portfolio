@@ -4,7 +4,7 @@ import { FC, MouseEvent } from "react";
 import Button from "@/components/Button";
 
 const navItems = [
-  { href: "#intro", label: "About" },
+  { href: "#about", label: "About" },
   { href: "#projects", label: "Projects" },
   { href: "#faqs", label: "Faqs" },
   { href: "#contact", label: "Contact" },

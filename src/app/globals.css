@@ -50,6 +50,20 @@ body {
   }
 }
 
+@keyframes lavender-shimmer {
+  0%,
+  100% {
+    text-shadow: 0 0 0px rgba(188, 150, 236, 0);
+  }
+  50% {
+    text-shadow: 0 0 18px rgba(188, 150, 236, 0.35);
+  }
+}
+
+.animate-lavender-shimmer {
+  animation: lavender-shimmer 7s ease-in-out infinite;
+}
+
 .starfield {
   position: absolute;
   inset: 0;

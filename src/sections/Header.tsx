@@ -8,7 +8,7 @@ import { motion, useAnimate } from "framer-motion";
 
 /* Navigation items array */
 const navItems = [
-  { label: "About", href: "#intro" },
+  { label: "About", href: "#about" },
   { label: "Selected Works", href: "#projects" },
   { label: "FAQs", href: "#faqs" },
   { label: "Contact", href: "#contact" },
