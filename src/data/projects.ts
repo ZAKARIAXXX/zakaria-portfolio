@@ -1,7 +1,4 @@
 import { StaticImageData } from "next/image";
-import image2 from "@/assets/images/project-2.jpg";
-import image4 from "@/assets/images/project-4.jpg";
-import image5 from "@/assets/images/project-5.jpg";
 import waslaImage from "@/assets/images/wasla.webp";
 import botanicaImage from "@/assets/images/image.webp";
 import aubeImage from "@/assets/images/aube-cafe.webp";
@@ -61,20 +58,6 @@ export const projects: Project[] = [
     ],
   },
   {
-    name: "Wavelength Studios",
-    slug: "wavelength-studios",
-    image: image2,
-    year: 2023,
-    client: "Wavelength Studios",
-    role: "Web Design & Development",
-    description:
-      "A high-performance portfolio site for an award-winning audio production studio.",
-    challenge:
-      "Showcasing audio work visually is inherently difficult. The studio required a way to let users experience their soundscapes without overwhelming them with text.",
-    solution:
-      "We integrated a custom audio visualizer into the hero section and created an interactive project gallery where sound samples play on hover. The dark mode aesthetic reflects the studio environment.",
-  },
-  {
     name: "Botanica Skincare",
     slug: "botanica-skincare",
     image: botanicaImage,
@@ -99,33 +82,5 @@ export const projects: Project[] = [
       "Interactive FAQ section addressing ordering, delivery, and payment questions",
       "French-language storefront tailored with Moroccan Darija local-market positioning",
     ],
-  },
-  {
-    name: "Urban Plates",
-    slug: "urban-plates",
-    image: image4,
-    year: 2022,
-    client: "Urban Plates",
-    role: "eCommerce Platform",
-    description:
-      "A direct-to-consumer meal kit service delivering chef-prepared ingredients.",
-    challenge:
-      "The user journey for selecting meals and managing subscriptions was too complex, leading to high cart abandonment.",
-    solution:
-      "We streamlined the subscription flow, implemented a 'Build Your Box' interface, and optimized the checkout process. This led to a 25% increase in conversion rates.",
-  },
-  {
-    name: "Bloom Botanicals",
-    slug: "bloom-botanicals",
-    image: image5,
-    year: 2022,
-    client: "Bloom Botanicals",
-    role: "Marketing Website",
-    description:
-      "An informational and e-commerce site for a luxury skincare brand using rare botanical ingredients.",
-    challenge:
-      "Communicating the science behind the ingredients in an accessible, luxurious way.",
-    solution:
-      "We used high-quality macro photography combined with clean serif typography to create an editorial look. Interactive 'Ingredient Spotlight' sections educate users while they shop.",
   },
 ];

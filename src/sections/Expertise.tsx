@@ -132,7 +132,7 @@ const Expertise: FC = () => {
     <section
       ref={targetRef}
       className={`relative bg-stone-900 text-white ${
-        shouldReduceMotion ? "" : "h-[300vh]"
+        shouldReduceMotion ? "" : "h-[200vh]"
       }`}
       id="expertise"
     >

@@ -82,8 +82,7 @@ const Hero: FC = () => {
             >
               I Build AI Tools, SaaS Products &amp;{" "}
               <span className="text-lavender-500">High-Performance</span>{" "}
-              <span className="text-lavender-500">Modern</span> Web
-              Experiences
+              <span className="text-lavender-500">Modern</span> Web Experiences
             </motion.h1>
 
             <div className="flex flex-row items-center gap-4 sm:gap-6 mt-8 md:mt-10 flex-wrap">
@@ -220,7 +219,7 @@ const Hero: FC = () => {
           </motion.div>
         </div>
       </div>
-      <div className="hidden md:block md:h-[250vh]" ref={scrollingDiv}></div>
+      <div className="hidden md:block md:h-[120vh]" ref={scrollingDiv}></div>
     </section>
   );
 };

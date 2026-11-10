@@ -1,44 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 type Theme = "light" | "dark";
 
-function getInitialTheme(): Theme {
-  if (typeof window === "undefined") return "light";
-  const stored = window.localStorage.getItem("theme");
-  if (stored === "light" || stored === "dark") return stored;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+const THEME_EVENT = "themechange";
+
+function getTheme(): Theme {
+  if (typeof document === "undefined") return "light";
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
+}
+
+function subscribe(callback: () => void) {
+  window.addEventListener(THEME_EVENT, callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    window.removeEventListener(THEME_EVENT, callback);
+    window.removeEventListener("storage", callback);
+  };
+}
+
+function applyTheme(theme: Theme) {
+  const root = document.documentElement;
+  root.classList.toggle("dark", theme === "dark");
+  try {
+    window.localStorage.setItem("theme", theme);
+  } catch (error) {
+    console.error("Unable to persist theme preference", error);
+  }
+  window.dispatchEvent(new Event(THEME_EVENT));
 }
 
 export default function ThemeToggle() {
-  const [mounted, setMounted] = useState(false);
-  const [theme, setTheme] = useState<Theme>("light");
+  const theme = useSyncExternalStore(
+    subscribe,
+    getTheme,
+    () => "light" as Theme,
+  );
 
-  useEffect(() => {
-    setTheme(getInitialTheme());
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    if (typeof document === "undefined") return;
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-    try {
-      window.localStorage.setItem("theme", theme);
-    } catch (error) {
-      console.error("Unable to persist theme preference", error);
-    }
-  }, [theme, mounted]);
-
-  const toggle = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+  const toggle = () => applyTheme(theme === "dark" ? "light" : "dark");
 
   return (
     <button
@@ -46,7 +46,7 @@ export default function ThemeToggle() {
       onClick={toggle}
       className="size-11 border border-stone-400 rounded-full inline-flex items-center justify-center bg-stone-200 text-stone-900 dark:bg-stone-800 dark:text-cream-100 hover:bg-stone-300 dark:hover:bg-stone-700 transition-colors"
     >
-      {mounted && theme === "dark" ? (
+      {theme === "dark" ? (
         // Sun icon - sharper rays
         <svg
           xmlns="http://www.w3.org/2000/svg"

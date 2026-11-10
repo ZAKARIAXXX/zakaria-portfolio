@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Zakaria Chelouati — Developer Portfolio
+
+Personal portfolio website for **Zakaria Chelouati**, Backend Software Engineer and final-year Computer Engineering student (Génie Logiciel) at High-Tech Rabat, Salé/Rabat, Morocco.
+
+Features an interactive developer terminal, real-world project showcases, and a responsive dark/light visual identity.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router with Turbopack)
+- **Library:** React 19
+- **Language:** TypeScript (strict mode)
+- **Styling:** Tailwind CSS 3.4 (stone neutrals, dark panels, purple accent `#bc96ec`)
+- **Typography:** Archivo (body text & terminal) & Syne (headings)
+- **Animations:** framer-motion & split-type
+- **Deployment:** Vercel
+
+## Key Features
+
+- **Interactive CLI Terminal:** A fully interactive terminal section (`help`, `whoami`, `ls projects`, `cat security`, `cat about`, `skills`, `./hire-me`, `clear`) with command history, autocomplete shortcuts, and clickable pills.
+- **Project Case Studies:** Detailed breakdown of real-world products including Wasla CRM, Aube Café, and Botanica Skincare with dynamic routing and image previews.
+- **Design & Performance:** Smooth scroll interactions, dynamic cursor, theme switching, and optimized static page generation.
+- **SEO & Social Cards:** Configured metadata, Open Graph cards, dynamic XML sitemap, and robots.txt.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18.17+ or 20+
+- npm (or pnpm / yarn)
+
+### Installation
+
+```bash
+git clone https://github.com/ZAKARIAXXX/zakaria-portfolio.git
+cd zakaria-portfolio
+npm install
+```
+
+### Development
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create an optimized production build:
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+Run typechecking:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npx tsc --noEmit
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Run ESLint:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run lint
+```

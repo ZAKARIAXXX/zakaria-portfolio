@@ -96,7 +96,7 @@ const TechStack: FC = () => {
     <section
       ref={containerRef}
       className={`relative bg-stone-100/50 dark:bg-stone-900/50 ${
-        shouldReduceMotion ? "" : "h-[300vh]"
+        shouldReduceMotion ? "" : "h-[200vh]"
       }`}
       id="tech-stack"
     >
