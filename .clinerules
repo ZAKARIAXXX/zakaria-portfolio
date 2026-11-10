@@ -1,0 +1,9 @@
+# zakaria-portfolio — Cline rules
+
+- Next.js 16, React 19, TypeScript strict, Tailwind 3.4, framer-motion.
+- Commands: npm run dev, npm run build (must pass), npm run lint, npx tsc --noEmit.
+- NO `any`. NO @ts-ignore. NO suppressHydrationWarning. Fix root causes.
+- Do NOT change design, colors, fonts, layout. Do NOT add features. Do NOT change copy/content.
+- Do NOT nest <button> inside <a>.
+- One fix at a time. Run npm run build after each. Ask before the next section.
+- Visual identity: stone neutrals, purple accent #bc96ec, Archivo + Syne.
