@@ -1,31 +1,9 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
 import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
+import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
 import heroImage from "@/assets/images/hero-image.jpg.jpeg";
-
-const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
-
-const subscribeToReducedMotion = (callback: () => void) => {
-  const mediaQuery = window.matchMedia(REDUCED_MOTION_QUERY);
-  mediaQuery.addEventListener("change", callback);
-
-  return () => mediaQuery.removeEventListener("change", callback);
-};
-
-const getReducedMotionSnapshot = () =>
-  window.matchMedia(REDUCED_MOTION_QUERY).matches;
-
-const getReducedMotionServerSnapshot = () => false;
-
-function usePrefersReducedMotion() {
-  return useSyncExternalStore(
-    subscribeToReducedMotion,
-    getReducedMotionSnapshot,
-    getReducedMotionServerSnapshot,
-  );
-}
 
 const ABOUT_COPY =
   "I'm Zakaria Chelouati, a final-year Computer Engineering student (Génie Logiciel) at High-Tech Rabat, based in Salé. I build full-stack web products — and I break them too: I'm on Hack The Box's Senior Web Penetration Tester path. I'm looking for a junior backend role or internship where I can ship real code and keep growing.";

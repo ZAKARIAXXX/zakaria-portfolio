@@ -5,6 +5,7 @@ import Hero from "@/sections/Hero";
 import Intro from "@/sections/Intro";
 import Terminal from "@/sections/Terminal";
 import About from "@/sections/About";
+import Education from "@/sections/Education";
 import Projects from "@/sections/Projects";
 import Expertise from "@/sections/Expertise";
 import Services from "@/sections/Services";
@@ -18,6 +19,7 @@ export default function Home() {
       <Intro />
       <Terminal />
       <About />
+      <Education />
       <Expertise />
       <Services />
       <TechStack />
