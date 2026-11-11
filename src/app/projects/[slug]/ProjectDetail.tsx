@@ -1,16 +1,40 @@
 "use client";
 
-import { Project, projects } from "@/data/projects";
+import { Project, projects, GalleryItem } from "@/data/projects";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useAnimate, stagger } from "framer-motion";
-import { useEffect } from "react";
+import { motion, useAnimate, stagger, AnimatePresence } from "framer-motion";
+import { useEffect, useState, useCallback } from "react";
 import SplitType from "split-type";
 import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
 
 export default function ProjectDetail({ project }: { project: Project }) {
   const [titleScope, titleAnimate] = useAnimate();
   const shouldReduceMotion = usePrefersReducedMotion();
+  const [activeModalItem, setActiveModalItem] = useState<GalleryItem | null>(null);
+
+  const closeModal = useCallback(() => {
+    setActiveModalItem(null);
+  }, []);
+
+  useEffect(() => {
+    if (!activeModalItem) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [activeModalItem, closeModal]);
 
   useEffect(() => {
     const element = titleScope.current;
@@ -248,18 +272,19 @@ export default function ProjectDetail({ project }: { project: Project }) {
                     delay: shouldReduceMotion ? 0 : Math.min(index * 0.08, 0.4),
                     ease: "easeOut",
                   }}
-                  className="group flex flex-col rounded-2xl border border-stone-200/80 bg-white/70 p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-stone-800 dark:bg-stone-900/70"
+                  onClick={() => setActiveModalItem(item)}
+                  className="group flex flex-col rounded-2xl border border-stone-200/80 bg-white/70 p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl cursor-zoom-in dark:border-stone-800 dark:bg-stone-900/70"
                 >
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-stone-200/80 bg-stone-100 dark:border-stone-800 dark:bg-stone-800">
                     <Image
                       src={item.image}
                       alt={`${project.name} — ${item.label}`}
-                      className="size-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                      className="size-full object-cover object-top transition-transform duration-300 ease-out group-hover:scale-105"
                       sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     />
                   </div>
                   <div className="mt-3.5 flex items-center justify-between px-1">
-                    <span className="font-medium text-base text-stone-800 dark:text-cream-100">
+                    <span className="font-medium text-base text-stone-800 dark:text-cream-100 group-hover:text-lavender-500 transition-colors">
                       {item.label}
                     </span>
                     <span className="font-mono text-xs text-stone-400 dark:text-stone-500">
@@ -271,6 +296,73 @@ export default function ProjectDetail({ project }: { project: Project }) {
             </div>
           </motion.div>
         )}
+
+        {/* Fullscreen Lightbox Modal */}
+        <AnimatePresence>
+          {activeModalItem && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={closeModal}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 sm:p-6 md:p-10 backdrop-blur-md cursor-zoom-out"
+              role="dialog"
+              aria-modal="true"
+              aria-label={activeModalItem.label}
+            >
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={closeModal}
+                className="absolute top-5 right-5 z-20 flex size-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md border border-white/20 transition-all hover:bg-white/20 hover:scale-105 focus:outline-none"
+                aria-label="Close modal"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+
+              {/* Modal Content */}
+              <motion.div
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 15 }}
+                animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+                exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 15 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative flex flex-col max-h-[92vh] max-w-6xl w-full cursor-default rounded-2xl overflow-hidden border border-white/15 bg-stone-900 shadow-2xl"
+              >
+                <div className="relative w-full max-h-[82vh] overflow-auto flex items-center justify-center bg-stone-950">
+                  <Image
+                    src={activeModalItem.image}
+                    alt={`${project.name} — ${activeModalItem.label}`}
+                    className="w-full h-auto max-h-[82vh] object-contain"
+                    priority
+                  />
+                </div>
+                <div className="flex items-center justify-between border-t border-white/10 bg-stone-900/90 px-6 py-4 backdrop-blur-sm">
+                  <span className="font-syne text-lg font-medium text-cream-100">
+                    {activeModalItem.label}
+                  </span>
+                  <span className="text-xs text-stone-400 font-mono">
+                    Click anywhere outside or press ESC to close
+                  </span>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
 
       {/* Next Project Footer */}
