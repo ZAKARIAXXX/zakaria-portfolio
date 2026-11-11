@@ -1,7 +1,22 @@
 import { StaticImageData } from "next/image";
+import campusloopMainImage from "@/assets/images/campusloopmain.webp";
+import homepageImage from "@/assets/images/homepage.webp";
+import skillswapImage from "@/assets/images/skillswap.webp";
+import messagesImage from "@/assets/images/messages.webp";
+import adminImage from "@/assets/images/admin.webp";
+import studygroupsImage from "@/assets/images/studygroups.webp";
+import createlistingsImage from "@/assets/images/createlistings.webp";
+import profileImage from "@/assets/images/profile.webp";
+import saveditemsImage from "@/assets/images/saveditems.webp";
+import rentingsImage from "@/assets/images/rentings.webp";
 import waslaImage from "@/assets/images/wasla.webp";
 import botanicaImage from "@/assets/images/image.webp";
 import aubeImage from "@/assets/images/aube-cafe.webp";
+
+export interface GalleryItem {
+  image: StaticImageData;
+  label: string;
+}
 
 export interface Project {
   name: string;
@@ -16,9 +31,46 @@ export interface Project {
   link?: string;
   features?: string[];
   category?: string;
+  gallery?: GalleryItem[];
 }
 
 export const projects: Project[] = [
+  {
+    name: "CampusLoop",
+    slug: "campusloop",
+    image: campusloopMainImage,
+    year: 2026,
+    client: "CampusLoop (SaaS)",
+    role: "Founder & Full-Stack Developer",
+    link: "https://campusloop-virid-alpha.vercel.app/",
+    category: "Marketplace / SaaS",
+    description:
+      "A student marketplace and skill-exchange platform for Moroccan universities — buy and sell on campus, swap skills, message in real time, all with verified student accounts.",
+    challenge:
+      "Students had no trusted place to buy, sell, or swap skills on campus. Facebook groups are messy, unverified, and full of scams — no structure, no trust, no way to know who you're dealing with.",
+    solution:
+      "Designed and built CampusLoop — a full-stack platform with a Marketplace for buying and selling, SkillSwap for exchanging skills, real-time messaging, and student verification via academic email. Built with React, TypeScript, Vite, Tailwind, and Supabase (PostgreSQL + Auth + Storage). An admin dashboard keeps the platform clean, and study groups turn it into a real campus community.",
+    features: [
+      "Marketplace for buying and selling on campus",
+      "SkillSwap — exchange skills with other students",
+      "Real-time messaging between buyers and sellers",
+      "Student verification via academic email domain",
+      "Admin dashboard for moderation and platform management",
+      "Study groups and community spaces",
+      "Mobile-first responsive design",
+    ],
+    gallery: [
+      { image: homepageImage, label: "Marketplace" },
+      { image: skillswapImage, label: "SkillSwap" },
+      { image: messagesImage, label: "Real-time messaging" },
+      { image: adminImage, label: "Admin dashboard" },
+      { image: studygroupsImage, label: "Study groups" },
+      { image: createlistingsImage, label: "Create a listing" },
+      { image: profileImage, label: "Profile" },
+      { image: saveditemsImage, label: "Saved items" },
+      { image: rentingsImage, label: "Rentals" },
+    ],
+  },
   {
     name: "Wasla CRM",
     slug: "wasla-crm",

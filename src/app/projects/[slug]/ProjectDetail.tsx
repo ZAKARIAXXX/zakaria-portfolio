@@ -6,9 +6,11 @@ import Link from "next/link";
 import { motion, useAnimate, stagger } from "framer-motion";
 import { useEffect } from "react";
 import SplitType from "split-type";
+import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
 
 export default function ProjectDetail({ project }: { project: Project }) {
   const [titleScope, titleAnimate] = useAnimate();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     const element = titleScope.current;
@@ -215,6 +217,56 @@ export default function ProjectDetail({ project }: { project: Project }) {
                     {feature}
                   </span>
                 </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Screenshot Gallery (if available) */}
+        {project.gallery && project.gallery.length > 0 && (
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 40 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="mt-20 pt-16 border-t border-stone-300 dark:border-stone-700"
+          >
+            <h3 className="text-3xl font-medium mb-8 text-stone-800 dark:text-cream-100">
+              Platform Screenshots
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {project.gallery.map((item, index) => (
+                <motion.div
+                  key={item.label}
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
+                  whileInView={
+                    shouldReduceMotion ? undefined : { opacity: 1, y: 0 }
+                  }
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: shouldReduceMotion ? 0 : Math.min(index * 0.08, 0.4),
+                    ease: "easeOut",
+                  }}
+                  className="group flex flex-col rounded-2xl border border-stone-200/80 bg-white/70 p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-stone-800 dark:bg-stone-900/70"
+                >
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-stone-200/80 bg-stone-100 dark:border-stone-800 dark:bg-stone-800">
+                    <Image
+                      src={item.image}
+                      alt={`${project.name} — ${item.label}`}
+                      className="size-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    />
+                  </div>
+                  <div className="mt-3.5 flex items-center justify-between px-1">
+                    <span className="font-medium text-base text-stone-800 dark:text-cream-100">
+                      {item.label}
+                    </span>
+                    <span className="font-mono text-xs text-stone-400 dark:text-stone-500">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                </motion.div>
               ))}
             </div>
           </motion.div>
