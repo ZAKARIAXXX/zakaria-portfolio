@@ -63,6 +63,11 @@ const tools = [
   },
 ];
 
+const CARD_ENTRY_START = 0.18;
+const CARD_ENTRY_STAGGER = 0.27;
+const CARD_ENTRY_DURATION = 0.27;
+const CARD_ENTRY_FADE = 0.12;
+
 const TechStack: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -165,8 +170,10 @@ const Card = ({
   const shouldReduceMotion = useReducedMotion();
   // Card 0 starts in place. Cards 1, 2, 3 enter at smooth, well-spaced intervals
   const isFirst = i === 0;
-  const entryStart = isFirst ? 0 : (i - 1) * 0.26 + 0.16;
-  const entryEnd = isFirst ? 0 : entryStart + 0.2;
+  const entryStart = isFirst
+    ? 0
+    : CARD_ENTRY_START + (i - 1) * CARD_ENTRY_STAGGER;
+  const entryEnd = isFirst ? 0 : entryStart + CARD_ENTRY_DURATION;
 
   // Smooth vertical slide up
   const y = useTransform(
@@ -179,8 +186,8 @@ const Card = ({
   const scale = useTransform(progress, (p) => {
     let currentScale = 1;
     for (let j = i + 1; j < totalCards; j++) {
-      const nextStart = (j - 1) * 0.26 + 0.16;
-      const nextEnd = nextStart + 0.2;
+      const nextStart = CARD_ENTRY_START + (j - 1) * CARD_ENTRY_STAGGER;
+      const nextEnd = nextStart + CARD_ENTRY_DURATION;
       if (p > nextStart) {
         const stepProgress = Math.min(
           1,
@@ -197,12 +204,12 @@ const Card = ({
     if (!isFirst && p < entryStart) return 0;
     const enterAlpha = isFirst
       ? 1
-      : Math.min(1, Math.max(0, (p - entryStart) / 0.08));
+      : Math.min(1, Math.max(0, (p - entryStart) / CARD_ENTRY_FADE));
 
     let currentDim = 1;
     for (let j = i + 1; j < totalCards; j++) {
-      const nextStart = (j - 1) * 0.26 + 0.16;
-      const nextEnd = nextStart + 0.2;
+      const nextStart = CARD_ENTRY_START + (j - 1) * CARD_ENTRY_STAGGER;
+      const nextEnd = nextStart + CARD_ENTRY_DURATION;
       if (p > nextStart) {
         const stepProgress = Math.min(
           1,

@@ -6,6 +6,7 @@ import {
   useRef,
   useEffect,
   KeyboardEvent,
+  MouseEvent,
   ReactNode,
 } from "react";
 
@@ -47,7 +48,7 @@ export const Terminal: FC = () => {
           </p>
           <p className="text-xs text-stone-500 mt-2">
             Type <span className="text-lavender-500 font-semibold">help</span>{" "}
-            or click any quick command below.
+            or click any quick command above.
           </p>
         </div>
       ),
@@ -63,8 +64,21 @@ export const Terminal: FC = () => {
   useEffect(() => {
     const output = outputRef.current;
     if (!output) return;
-    output.scrollTo({ top: output.scrollHeight, behavior: "smooth" });
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    output.scrollTo({
+      top: output.scrollHeight,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
   }, [history]);
+
+  const clearTerminal = () => {
+    setHistory([]);
+    setInputVal("");
+    setHistoryIndex(null);
+    inputRef.current?.focus({ preventScroll: true });
+  };
 
   const executeCommand = (rawCommand: string) => {
     const trimmed = rawCommand.trim();
@@ -76,8 +90,7 @@ export const Terminal: FC = () => {
     const cmdLower = trimmed.toLowerCase();
 
     if (cmdLower === "clear") {
-      setHistory([]);
-      setInputVal("");
+      clearTerminal();
       return;
     }
 
@@ -483,7 +496,11 @@ export const Terminal: FC = () => {
     }
   };
 
-  const handleTerminalClick = () => {
+  const handleTerminalClick = (e: MouseEvent<HTMLDivElement>) => {
+    const target = e.target;
+    if (target instanceof Element && target.closest("a, button, input")) {
+      return;
+    }
     inputRef.current?.focus({ preventScroll: true });
   };
 
@@ -505,13 +522,17 @@ export const Terminal: FC = () => {
         </div>
 
         {/* Command Buttons */}
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div
+          className="flex flex-wrap gap-2 mb-4"
+          role="group"
+          aria-label="Quick commands"
+        >
           {AVAILABLE_COMMANDS.map((cmd: CommandName) => (
             <button
               key={cmd}
               type="button"
               onClick={() => executeCommand(cmd)}
-              className="px-3.5 py-1.5 rounded-full text-xs md:text-sm bg-stone-800/80 hover:bg-lavender-500/20 text-stone-300 hover:text-lavender-500 border border-stone-700/80 hover:border-lavender-500/50 transition-all font-sans cursor-pointer active:scale-95"
+              className="px-3.5 py-1.5 rounded-full text-xs md:text-sm bg-stone-800/80 hover:bg-lavender-500/20 text-stone-300 hover:text-lavender-500 border border-stone-700/80 hover:border-lavender-500/50 transition-all font-sans cursor-pointer active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lavender-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-900"
             >
               {cmd}
             </button>
@@ -521,57 +542,89 @@ export const Terminal: FC = () => {
         {/* Terminal Window */}
         <div
           onClick={handleTerminalClick}
-          className="w-full bg-[#111111] border border-stone-800 rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden cursor-text transition-colors duration-300 hover:border-stone-700"
+          onKeyDown={(e) => {
+            if (e.ctrlKey && e.key.toLowerCase() === "l") {
+              e.preventDefault();
+              clearTerminal();
+            }
+          }}
+          className="w-full bg-[#111111] border border-stone-800 rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden cursor-text transition-colors duration-300 hover:border-stone-700 focus-within:border-lavender-500/40"
         >
           {/* Title Bar */}
           <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 bg-stone-950/80 border-b border-stone-800/80 select-none">
-            <div className="flex items-center gap-2">
+            <div
+              className="flex shrink-0 items-center gap-2"
+              aria-hidden="true"
+            >
               <span className="size-3 rounded-full bg-red-500/80 inline-block"></span>
               <span className="size-3 rounded-full bg-yellow-500/80 inline-block"></span>
               <span className="size-3 rounded-full bg-green-500/80 inline-block"></span>
             </div>
-            <div className="text-xs md:text-sm text-stone-400 font-sans font-medium tracking-wide">
+            <div className="min-w-0 truncate px-3 text-xs md:text-sm text-stone-400 font-sans font-medium tracking-wide">
               zakaria@portfolio:~
             </div>
-            <div className="text-[11px] text-stone-500 font-sans hidden sm:block">
-              zsh
+            <div className="flex shrink-0 items-center gap-3">
+              <span className="text-[11px] text-stone-500 font-sans hidden sm:block">
+                zsh
+              </span>
+              <button
+                type="button"
+                onClick={clearTerminal}
+                className="text-[11px] font-sans text-stone-500 hover:text-lavender-500 transition-colors cursor-pointer px-2 py-1 -my-1 focus-visible:outline-none focus-visible:text-lavender-500"
+                aria-label="Clear terminal output"
+                title="Clear terminal (Ctrl+L)"
+              >
+                clear
+              </button>
             </div>
           </div>
 
-          {/* Terminal Screen Output */}
-          <div
-            ref={outputRef}
-            className="p-4 sm:p-6 md:p-8 space-y-4 max-h-[460px] overflow-y-auto overscroll-contain font-sans text-sm md:text-base leading-relaxed"
-          >
-            {history.map((item) => (
-              <div key={item.id} className="space-y-1.5">
-                <div className="flex items-center gap-2 text-stone-300 font-medium">
-                  <span className="text-lavender-500 select-none font-semibold">
-                    zakaria@portfolio:~$
-                  </span>
-                  <span>{item.command}</span>
+          <div className="flex h-[400px] flex-col sm:h-[460px]">
+            {/* Terminal Screen Output */}
+            <div
+              ref={outputRef}
+              role="log"
+              aria-live="polite"
+              aria-relevant="additions"
+              aria-label="Terminal output"
+              tabIndex={0}
+              className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 sm:p-6 md:p-8 space-y-4 font-sans text-sm md:text-base leading-relaxed focus-visible:outline-none"
+            >
+              {history.map((item) => (
+                <div key={item.id} className="space-y-1.5">
+                  <div className="flex items-center gap-2 text-stone-300 font-medium">
+                    <span className="text-lavender-500 select-none font-semibold">
+                      zakaria@portfolio:~$
+                    </span>
+                    <span>{item.command}</span>
+                  </div>
+                  <div className="pl-0 sm:pl-4">{item.content}</div>
                 </div>
-                <div className="pl-0 sm:pl-4">{item.content}</div>
-              </div>
-            ))}
+              ))}
+            </div>
 
             {/* Input Row */}
-            <div className="flex items-center gap-2 pt-1">
-              <span className="text-lavender-500 select-none font-semibold shrink-0">
-                zakaria@portfolio:~$
-              </span>
-              <input
-                ref={inputRef}
-                type="text"
-                value={inputVal}
-                onChange={(e) => setInputVal(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="type a command (or click pills above)..."
-                className="flex-1 bg-transparent border-none outline-none text-white font-sans placeholder-stone-600 focus:ring-0 p-0"
-                aria-label="Terminal command prompt"
-                autoComplete="off"
-                spellCheck="false"
-              />
+            <div className="shrink-0 border-t border-stone-800/70 bg-stone-950/40 px-4 py-3 sm:px-6 sm:py-4 md:px-8">
+              <div className="flex items-center gap-2">
+                <span className="text-lavender-500 select-none font-semibold shrink-0">
+                  zakaria@portfolio:~$
+                </span>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={inputVal}
+                  onChange={(e) => setInputVal(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="type a command (or click pills above)..."
+                  className="flex-1 bg-transparent border-none outline-none text-white font-sans placeholder-stone-600 focus:ring-0 p-0"
+                  aria-label="Terminal command prompt"
+                  autoComplete="off"
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  enterKeyHint="send"
+                  spellCheck="false"
+                />
+              </div>
             </div>
           </div>
         </div>
