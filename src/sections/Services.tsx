@@ -40,6 +40,13 @@ const services: Service[] = [
       "Improving product structure, performance, and digital presence for long-term growth.",
     icon: "💡",
   },
+  {
+    number: "05",
+    title: "Web Security Review",
+    description:
+      "I review web apps for the common vulnerabilities that get exploited in the real world — the OWASP Top 10: broken access control, injection, misconfigurations, and more. You get a clear report of what's wrong and how to fix it.",
+    icon: "🛡️",
+  },
 ];
 
 const Services: FC = () => {

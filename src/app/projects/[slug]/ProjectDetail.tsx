@@ -12,6 +12,9 @@ export default function ProjectDetail({ project }: { project: Project }) {
   const [titleScope, titleAnimate] = useAnimate();
   const shouldReduceMotion = usePrefersReducedMotion();
   const [activeModalItem, setActiveModalItem] = useState<GalleryItem | null>(null);
+  const isGitHubLink =
+    !!project.link && /^https?:\/\/(www\.)?github\.com\//i.test(project.link);
+  const architecture = project.architecture;
 
   const closeModal = useCallback(() => {
     setActiveModalItem(null);
@@ -86,7 +89,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
               rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider bg-lavender-500 hover:bg-lavender-600 text-white px-3.5 py-1.5 rounded-full transition-colors shadow-sm"
             >
-              <span>Live Site</span>
+              <span>{isGitHubLink ? "View on GitHub" : "Live Site"}</span>
               <span>↗</span>
             </a>
           )}
@@ -138,7 +141,13 @@ export default function ProjectDetail({ project }: { project: Project }) {
           <DetailItem label="Role" value={project.role} delay={0.3} />
           <DetailItem
             label="Link"
-            value={project.link ? "Visit Live Site ↗" : "No live demo"}
+            value={
+              project.link
+                ? isGitHubLink
+                  ? "Visit GitHub ↗"
+                  : "Visit Live Site ↗"
+                : "No live demo"
+            }
             isLink={!!project.link}
             href={project.link}
             delay={0.4}
@@ -182,7 +191,9 @@ export default function ProjectDetail({ project }: { project: Project }) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 px-6 py-3.5 rounded-xl bg-lavender-500 hover:bg-lavender-600 text-white font-medium shadow-lg transition-transform hover:-translate-y-0.5 duration-200"
                 >
-                  <span>Open Live Website</span>
+                  <span>
+                    {isGitHubLink ? "View Repository" : "Open Live Website"}
+                  </span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
@@ -204,6 +215,57 @@ export default function ProjectDetail({ project }: { project: Project }) {
           </motion.div>
         </div>
 
+        {/* Architecture (if available) */}
+        {architecture && (
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            className="mt-20 pt-16 border-t border-stone-300 dark:border-stone-700"
+          >
+            <h3 className="text-3xl font-medium mb-8 text-stone-800 dark:text-cream-100">
+              Architecture
+            </h3>
+            <div className="mx-auto max-w-3xl">
+              {architecture.layers.map((layer, index) => (
+                <div key={layer.name}>
+                  <div className="rounded-2xl bg-white/70 dark:bg-stone-900/70 border border-stone-200/80 dark:border-stone-800 shadow-sm p-5 md:p-6">
+                    <h4 className="text-lg md:text-xl font-medium text-stone-800 dark:text-cream-100">
+                      {layer.name}
+                    </h4>
+                    <ul className="mt-3 space-y-2">
+                      {layer.items.map((item) => (
+                        <li
+                          key={item}
+                          className="flex items-start gap-3 text-stone-600 dark:text-stone-300 leading-relaxed"
+                        >
+                          <span
+                            className="mt-2 size-1.5 rounded-full bg-lavender-500 shrink-0"
+                            aria-hidden="true"
+                          />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  {index < architecture.layers.length - 1 && (
+                    <div
+                      className="flex justify-center py-3 text-2xl text-lavender-500"
+                      aria-hidden="true"
+                    >
+                      ↓
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            <p className="mt-10 text-lg text-stone-600 dark:text-stone-300 leading-relaxed">
+              {architecture.flow}
+            </p>
+          </motion.div>
+        )}
+
         {/* Features List (if available) */}
         {project.features && project.features.length > 0 && (
           <motion.div
@@ -214,7 +276,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
             className="mt-20 pt-16 border-t border-stone-300 dark:border-stone-700"
           >
             <h3 className="text-3xl font-medium mb-8 text-stone-800 dark:text-cream-100">
-              Key Features & Architecture
+              {architecture ? "Key Features" : "Key Features & Architecture"}
             </h3>
             <div className="grid md:grid-cols-2 gap-4">
               {project.features.map((feature) => (

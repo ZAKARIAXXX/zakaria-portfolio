@@ -19,6 +19,12 @@ const skills = [
     tools: ["React", "Next.js", "TypeScript", "TailwindCSS", "Node.js"],
   },
   {
+    title: "Web Security",
+    description:
+      "I find and fix the vulnerabilities other developers miss. On Hack The Box's Senior Web Penetration Tester path — MWET skills assessment solved 4/4. I bring the attacker's mindset to the code I write, so the products I build are secure by default.",
+    tools: ["Burp Suite", "Nmap", "OWASP Top 10", "Hack The Box", "TryHackMe"],
+  },
+  {
     title: "AI & Automation",
     description:
       "Developing AI-powered tools, outreach systems, and workflow automations focused on real-world productivity.",
@@ -64,9 +70,9 @@ const Expertise: FC = () => {
 
   // Responsive initial estimate so there's no layout flash on mount
   const [maxScroll, setMaxScroll] = useState(() => {
-    if (typeof window === "undefined") return 1000;
+    if (typeof window === "undefined") return 1200;
     const w = window.innerWidth;
-    return w < 768 ? Math.round(w * 2.6) : Math.round(w * 0.55);
+    return w < 768 ? Math.round(w * 3.4) : Math.round(w * 0.75);
   });
 
   const { scrollYProgress } = useScroll({
@@ -132,7 +138,7 @@ const Expertise: FC = () => {
     <section
       ref={targetRef}
       className={`relative bg-stone-900 text-white ${
-        shouldReduceMotion ? "" : "h-[200vh]"
+        shouldReduceMotion ? "" : "h-[220vh]"
       }`}
       id="expertise"
     >
@@ -190,7 +196,7 @@ const Expertise: FC = () => {
                 <h3 className="text-2xl md:text-4xl font-syne font-medium leading-tight mt-4">
                   {skill.title}
                 </h3>
-                <p className="text-stone-400 text-base md:text-lg leading-relaxed line-clamp-4">
+                <p className="text-stone-400 text-base md:text-lg leading-relaxed line-clamp-6">
                   {skill.description}
                 </p>
               </div>

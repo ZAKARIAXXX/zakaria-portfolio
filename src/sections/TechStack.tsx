@@ -32,6 +32,21 @@ const tools = [
     tagBg: "hover:bg-emerald-500 hover:text-white hover:border-emerald-500",
   },
   {
+    category: "Security",
+    description:
+      "Auditing web applications, analyzing security risks, and identifying vulnerabilities to build secure software.",
+    tags: [
+      "Burp Suite",
+      "Nmap",
+      "OWASP Top 10",
+      "Hack The Box",
+      "TryHackMe",
+    ],
+    color: "from-cyan-500/40 via-blue-500/30 to-indigo-500/35",
+    border: "border-cyan-500/30 group-hover:border-cyan-500/70",
+    tagBg: "hover:bg-cyan-500 hover:text-white hover:border-cyan-500",
+  },
+  {
     category: "AI & Automation",
     description:
       "Creating AI-powered workflows, automation systems, and productivity-focused tools.",
@@ -63,10 +78,10 @@ const tools = [
   },
 ];
 
-const CARD_ENTRY_START = 0.18;
-const CARD_ENTRY_STAGGER = 0.27;
-const CARD_ENTRY_DURATION = 0.27;
-const CARD_ENTRY_FADE = 0.12;
+const CARD_ENTRY_START = 0.14;
+const CARD_ENTRY_STAGGER = 0.21;
+const CARD_ENTRY_DURATION = 0.21;
+const CARD_ENTRY_FADE = 0.10;
 
 const TechStack: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -101,7 +116,7 @@ const TechStack: FC = () => {
     <section
       ref={containerRef}
       className={`relative bg-stone-100/50 dark:bg-stone-900/50 ${
-        shouldReduceMotion ? "" : "h-[200vh]"
+        shouldReduceMotion ? "" : "h-[240vh]"
       }`}
       id="tech-stack"
     >
@@ -193,7 +208,7 @@ const Card = ({
           1,
           Math.max(0, (p - nextStart) / (nextEnd - nextStart)),
         );
-        currentScale -= stepProgress * 0.045;
+        currentScale -= stepProgress * 0.038;
       }
     }
     return currentScale;
@@ -215,7 +230,7 @@ const Card = ({
           1,
           Math.max(0, (p - nextStart) / (nextEnd - nextStart)),
         );
-        currentDim -= stepProgress * 0.18;
+        currentDim -= stepProgress * 0.15;
       }
     }
     return enterAlpha * Math.max(0.35, currentDim);

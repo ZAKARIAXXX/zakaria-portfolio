@@ -10,8 +10,24 @@ import profileImage from "@/assets/images/profile.webp";
 import saveditemsImage from "@/assets/images/saveditems.webp";
 import rentingsImage from "@/assets/images/rentings.webp";
 import waslaImage from "@/assets/images/wasla.webp";
+import waslaDashboardImage from "@/assets/images/wasladashboard.webp";
+import waslaChatsImage from "@/assets/images/waslachats.webp";
+import waslaAgentImage from "@/assets/images/alldayagentwasla.webp";
+import waslaKnowledgeImage from "@/assets/images/waslaknowledgebase.webp";
+import waslaAutomationsImage from "@/assets/images/waslaautomations.webp";
+import waslaContactsImage from "@/assets/images/waslacontacts.webp";
+import waslaSettingsImage from "@/assets/images/waslasettings.webp";
 import botanicaImage from "@/assets/images/image.webp";
 import aubeImage from "@/assets/images/aube-cafe.webp";
+import vpnRequestsImage from "@/assets/images/vpn-requests.webp";
+import vpnUsersImage from "@/assets/images/vpn-users.webp";
+import vpnUsersGroupImage from "@/assets/images/vpn_users-group.webp";
+import appUsersImage from "@/assets/images/app-users.webp";
+import connectionVpnImage from "@/assets/images/connection-vpn.webp";
+import auditLogsImage from "@/assets/images/audit-logs.webp";
+import securityAlertsImage from "@/assets/images/alerts-2.webp";
+import blockedDevicesImage from "@/assets/images/blocked-devices.webp";
+import monitoringImage from "@/assets/images/monitoring.webp";
 
 export interface GalleryItem {
   image: StaticImageData;
@@ -32,6 +48,10 @@ export interface Project {
   features?: string[];
   category?: string;
   gallery?: GalleryItem[];
+  architecture?: {
+    layers: { name: string; items: string[] }[];
+    flow: string;
+  };
 }
 
 export const projects: Project[] = [
@@ -72,18 +92,131 @@ export const projects: Project[] = [
     ],
   },
   {
+    name: "Sentinel VAC",
+    slug: "sentinel-vac",
+    image: monitoringImage,
+    year: 2026,
+    client: "PFE — High-Tech Rabat",
+    role: "Cybersecurity & Infrastructure Engineer",
+    link: "https://github.com/ZAKARIAXXX/pt57-vpn-portal",
+    category: "Cybersecurity / Infrastructure",
+    description:
+      "Enterprise VPN server with an administration portal — Active Directory authentication, OpenVPN remote access, and an RBAC approval workflow for a realistic enterprise network.",
+    challenge:
+      "Remote access in a small enterprise is usually managed by hand — requests over email or chat, no central approval, no audit trail, and no single place to see who can connect. The VPN, the directory, and the web app live in separate worlds, so granting or revoking access is slow and error-prone.",
+    solution:
+      "Built a complete enterprise remote-access platform: OpenVPN on Ubuntu 24.04, Active Directory Domain Services on Windows Server 2022, a FastAPI backend with PostgreSQL, and a React admin portal. Users request access with their Active Directory credentials (LDAP bind — passwords are never stored); a security analyst approves or rejects the request; on approval the service account adds the user to the VPN_Users AD group and access is immediate. Every security-sensitive action is written to an audit log. Auth chain: OpenVPN → PAM → SSSD → Active Directory. Planned next steps: TOTP MFA, automatic access expiration, session monitoring, and SIEM integration.",
+    architecture: {
+      layers: [
+        {
+          name: "Client",
+          items: ["OpenVPN Client", "Web browser (request portal)"],
+        },
+        {
+          name: "VPN + Application Server — Ubuntu 24.04",
+          items: [
+            "OpenVPN Server (AES-256-GCM, TLS 1.3)",
+            "PAM authentication",
+            "SSSD",
+            "FastAPI backend",
+            "PostgreSQL",
+          ],
+        },
+        {
+          name: "Directory — Windows Server 2022",
+          items: [
+            "Active Directory Domain Services",
+            "DNS Server",
+            "Domain Controller",
+            "VPN_Users group",
+          ],
+        },
+        {
+          name: "Web Portal — React",
+          items: [
+            "VPN request portal",
+            "Administration portal",
+            "Security dashboard",
+          ],
+        },
+      ],
+      flow: "User requests access in the portal → FastAPI verifies the AD credentials (LDAP bind) → analyst approves → FastAPI adds the user to the VPN_Users group → access is immediate. Every connection is authenticated through OpenVPN → PAM → SSSD → Active Directory.",
+    },
+    features: [
+      "Active Directory authentication via LDAP bind (passwords never stored)",
+      "Approval workflow: request → analyst review → group add → immediate access",
+      "Role-based access control — ADMIN, SECURITY_ANALYST, AUDITOR",
+      "Full audit logging of logins, requests, approvals, and AD group changes",
+      "Least-privilege service account — no Domain Admin",
+      "bcrypt password hashing for application accounts",
+      "Immediate access after approval — the AD group update takes effect at once",
+    ],
+    gallery: [
+      { image: vpnRequestsImage, label: "VPN requests" },
+      { image: vpnUsersImage, label: "VPN users" },
+      { image: vpnUsersGroupImage, label: "VPN users group" },
+      { image: appUsersImage, label: "Application users" },
+      { image: connectionVpnImage, label: "VPN connection" },
+      { image: auditLogsImage, label: "Audit logs" },
+      { image: securityAlertsImage, label: "Security alerts" },
+      { image: blockedDevicesImage, label: "Blocked devices" },
+      { image: monitoringImage, label: "Monitoring" },
+    ],
+  },
+  {
     name: "Wasla CRM",
     slug: "wasla-crm",
     image: waslaImage,
     year: 2026,
     client: "Wasla (SaaS)",
     role: "Full-Stack & AI Engineer",
+    link: "https://github.com/ZAKARIAXXX/wasla",
+    category: "AI SaaS / WhatsApp CRM",
     description:
-      "An AI-powered WhatsApp CRM and marketing automation platform built specifically for businesses operating in Moroccan Darija and French.",
+      "An AI-powered WhatsApp CRM and marketing automation platform built for businesses that sell in Moroccan Darija and French.",
     challenge:
-      "Small and medium businesses in Morocco rely heavily on WhatsApp to close sales, but managing hundreds of chats manually leads to missed leads, slow replies, and lost revenue. Existing global CRMs lack localization and fail to understand Moroccan Darija (the spoken Arabic dialect) and French hybrid text, making automated customer service ineffective.",
+      "Moroccan SMBs close most of their sales on WhatsApp, but managing hundreds of chats by hand means missed leads, slow replies, and lost revenue. Global CRMs don't solve it — they aren't localized, and they can't parse the Darija/French mix customers actually write in, so automation breaks down exactly where it's needed most.",
     solution:
-      "Designed and built Wasla, featuring Karima AI — a custom conversational agent trained to understand, qualify, and reply to customers in natural Moroccan Darija and French. Implemented a drag-and-drop Kanban pipeline for tracking deals, automated cron-scheduled follow-up sequences to re-engage dormant leads, real-time message sync using WebSockets, and rich analytics dashboards to monitor conversion rates and agent response performance.",
+      "Designed and built Wasla end to end — a React + TypeScript frontend over a Node.js / Express API (Prisma + PostgreSQL). Karima AI understands, qualifies, and replies to customers in natural Darija and French, working from a knowledge base the business controls. Lead intelligence prioritizes who to answer first; cron-scheduled follow-up sequences re-engage dormant leads automatically; and Socket.io keeps the shared team inbox in sync in real time.",
+    features: [
+      "Karima AI — qualifies leads and replies in Moroccan Darija and French",
+      "Centralized WhatsApp inbox with real-time sync (Socket.io)",
+      "Knowledge base — the business's own answers that Karima replies from",
+      "Automated follow-up sequences and broadcast campaigns (cron-scheduled)",
+      "Contact management with full conversation history",
+      "Team collaboration with role-based access (Owner / Admin / Agent)",
+      "Trilingual interface — English, French, Darija/Arabic",
+    ],
+    gallery: [
+      { image: waslaDashboardImage, label: "Dashboard" },
+      { image: waslaChatsImage, label: "Chat inbox" },
+      { image: waslaAgentImage, label: "AI agent" },
+      { image: waslaKnowledgeImage, label: "Knowledge base" },
+      { image: waslaAutomationsImage, label: "Automations" },
+      { image: waslaContactsImage, label: "Contacts" },
+      { image: waslaSettingsImage, label: "Settings" },
+    ],
+    architecture: {
+      layers: [
+        {
+          name: "Client — React + TypeScript",
+          items: ["React + Vite", "Tailwind CSS + shadcn/ui", "React Query", "Socket.io-client (real-time inbox)", "i18next — English / French / Darija"],
+        },
+        {
+          name: "API Layer",
+          items: ["REST API (Express)", "WebSockets (Socket.io)", "JWT authentication", "Bcrypt password hashing"],
+        },
+        {
+          name: "Backend Services — Node.js + Express",
+          items: ["Chat inbox service", "Lead intelligence", "Campaign scheduler (Node-cron)", "Contact management"],
+        },
+        {
+          name: "Data + AI",
+          items: ["PostgreSQL via Prisma ORM", "Karima AI — lead qualification (Darija / French)", "Automated replies + human handoff"],
+        },
+      ],
+      flow: "Customer chats arrive in the centralized inbox and sync to every agent in real time → Karima AI qualifies the lead and replies in Darija or French, or hands off to a human agent → lead intelligence prioritizes who to answer first → cron-scheduled sequences follow up with dormant leads automatically → the whole team works from one shared dashboard.",
+    },
   },
   {
     name: "Aube Café",
