@@ -33,7 +33,7 @@ const themeScript = `(function(){try{var stored=localStorage.getItem("theme");va
 
 const siteName = "Zakaria Chelouati";
 const siteDescription =
-  "AI Tools, SaaS Products & High-Performance Modern Web Experiences";
+  "Backend / Full-Stack Developer in Salé, Morocco. I build software \u2014 and then I try to break it. CampusLoop, Wasla, Sentinel VAC. G\u00e9nie Logiciel @ High-Tech Rabat, AppSec.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl || "http://localhost:3000"),
@@ -45,8 +45,8 @@ export const metadata: Metadata = {
   keywords: [
     "Zakaria Chelouati",
     "Full-Stack Developer",
-    "AI Engineer",
-    "SaaS",
+    "Backend Developer",
+    "AppSec",
     "Next.js",
     "React",
     "Morocco",
@@ -62,20 +62,11 @@ export const metadata: Metadata = {
     siteName,
     title: "Zakaria Chelouati • Portfolio",
     description: siteDescription,
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Zakaria Chelouati — Full-Stack Developer",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Zakaria Chelouati • Portfolio",
     description: siteDescription,
-    images: ["/og-image.png"],
   },
 };
 
