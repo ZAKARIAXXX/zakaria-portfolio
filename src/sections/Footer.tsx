@@ -67,7 +67,7 @@ const Footer: FC = () => {
                     </svg>
                   </span>
                 </Button>
-                <Button href="/resume.pdf" download variant="secondary">
+                <Button href="/resume.pdf" target="_blank" rel="noopener noreferrer" variant="secondary">
                   <span className="inline-flex items-center gap-2">
                     Download Resume
                     <svg

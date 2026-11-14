@@ -13,12 +13,20 @@ type EducationEntry = {
 
 const education: EducationEntry[] = [
   {
-    period: "2023–2027",
-    badge: "Final year",
-    title: "Génie Informatique",
+    period: "2026–2028",
+    badge: "In progress",
+    title: "Cycle Ingénieur — Génie Informatique",
     institution: "High-Tech Rabat",
     description:
-      "Computer Engineering, specializing in Génie Logiciel — software engineering, backend systems, Java/Spring, AI.",
+      "Engineering cycle, specializing in Génie Logiciel — software engineering, backend systems, Java/Spring, AI.",
+  },
+  {
+    period: "2025–2026",
+    badge: "Obtained",
+    title: "Licence en Génie Informatique",
+    institution: "High-Tech Rabat",
+    description:
+      "Bachelor in Computer Engineering — the foundation: software development, systems, networks, databases.",
   },
   {
     period: "—",

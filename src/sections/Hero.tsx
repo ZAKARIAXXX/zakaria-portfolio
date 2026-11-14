@@ -128,7 +128,8 @@ const Hero: FC = () => {
               >
                 <Button
                   href="/resume.pdf"
-                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
                   variant="secondary"
                   iconAfter={
                     <svg

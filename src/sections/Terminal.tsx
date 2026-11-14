@@ -40,8 +40,8 @@ export const Terminal: FC = () => {
             Zakaria Chelouati — Backend Software Engineer
           </p>
           <p className="text-stone-400">
-            Final-year Computer Engineering (Génie Logiciel) @ High-Tech Rabat •
-            Salé/Rabat, Morocco
+            Computer Engineering (Génie Logiciel) @ High-Tech Rabat •
+            Licence obtained 2026 · Engineering cycle 2026–2028 · Salé/Rabat, Morocco
           </p>
           <p className="text-lavender-500 italic mt-1">
             &ldquo;I build products that work.&rdquo;
@@ -166,8 +166,9 @@ export const Terminal: FC = () => {
               Engineer
             </p>
             <p className="text-stone-300">
-              <span className="text-stone-400">Education:</span> Final-year
-              Computer Engineering — Génie Logiciel, High-Tech Rabat
+              <span className="text-stone-400">Education:</span> Licence in
+              Computer Engineering (2026) — Engineering Cycle, Génie
+              Logiciel, High-Tech Rabat (2026–2028)
             </p>
             <p className="text-stone-300">
               <span className="text-stone-400">Location:</span> Salé / Rabat,
@@ -437,7 +438,8 @@ export const Terminal: FC = () => {
                 <span className="text-stone-400">Resume:</span>{" "}
                 <a
                   href="/resume.pdf"
-                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-lavender-500 hover:text-white underline underline-offset-4 font-medium"
                 >
                   Download CV (/resume.pdf)
