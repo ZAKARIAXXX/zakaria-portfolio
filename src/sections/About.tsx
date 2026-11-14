@@ -12,13 +12,13 @@ import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
 import heroImage from "@/assets/images/hero-image.jpg.jpeg";
 
 const ABOUT_COPY =
-  "I'm Zakaria Chelouati, a Computer Engineering graduate (Licence in Génie Informatique, 2026) now in the engineering cycle — Génie Logiciel — at High-Tech Rabat, based in Salé. I build full-stack web products — and I break them too: I'm on Hack The Box's Senior Web Penetration Tester path. I'm looking for a junior backend role or internship where I can ship real code and keep growing.";
+  "I'm Zakaria Chelouati, a Computer Engineering graduate (Licence in Génie Informatique, 2026) now in the engineering cycle — Génie Logiciel — at High-Tech Rabat, based in Salé. I build full-stack web products — and I break them too: I'm on Hack The Box's Senior Web Penetration Tester path. I ship real code and keep growing — that's the standard I work to.";
 
 const HIGHLIGHTS = [
   "Zakaria Chelouati",
   "full-stack web products",
   "Senior Web Penetration Tester",
-  "junior backend role or internship",
+  "ship real code",
 ] as const;
 
 const highlightRanges = HIGHLIGHTS.map((phrase) => {

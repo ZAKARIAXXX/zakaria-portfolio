@@ -10,6 +10,9 @@ import { motion, useAnimate } from "framer-motion";
 const navItems = [
   { label: "About", href: "#about" },
   { label: "Selected Works", href: "#projects" },
+  { label: "Services", href: "#services" },
+  { label: "Tech Stack", href: "#tech-stack" },
+  { label: "Education", href: "#education" },
   { label: "FAQs", href: "#faqs" },
   { label: "Contact", href: "#contact" },
 ];
@@ -69,12 +72,12 @@ const Header: FC = () => {
         className="fixed top-0 left-0 w-full h-0 bg-stone-950/95 dark:bg-night/95 backdrop-blur-2xl z-10 overflow-hidden transition-colors duration-300"
         ref={navScope}
       >
-        <nav className="mt-20 flex flex-col">
+        <nav className="mt-20 flex max-h-[calc(100dvh-5rem)] flex-col overflow-y-auto pb-6">
           {navItems.map(({ label, href }) => (
             <a
               key={label}
               href={href}
-              className="relative group text-stone-200 border-t last:border-b border-stone-800 py-8 isolate"
+              className="relative group text-stone-200 border-t last:border-b border-stone-800 py-5 isolate"
               onClick={handleClickMobileNavItem}
             >
               <div className="container flex items-center !max-w-full justify-between">
