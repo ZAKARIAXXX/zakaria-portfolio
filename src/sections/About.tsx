@@ -1,7 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
-import { motion, type Variants } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
 import heroImage from "@/assets/images/hero-image.jpg.jpeg";
 
@@ -44,26 +50,46 @@ const words: WordToken[] = (() => {
   });
 })();
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.018,
-    },
-  },
-};
+const totalWords = words.filter((word) => !word.whitespace).length;
 
-const wordVariants: Variants = {
-  hidden: { opacity: 0, y: 14 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: "easeOut" },
-  },
+const ScrollWord = ({
+  children,
+  progress,
+  range,
+  highlighted,
+}: {
+  children: string;
+  progress: MotionValue<number>;
+  range: [number, number];
+  highlighted: boolean;
+}) => {
+  // Same scroll-linked reveal as the Intro statement: each word lights up
+  // exactly as the scroll reaches it, so the reader's pace drives the
+  // animation and no word is ever rushed past.
+  const opacity = useTransform(progress, range, [0.15, 1]);
+  const y = useTransform(progress, range, [6, 0]);
+
+  return (
+    <motion.span style={{ opacity, y }} className="inline-block">
+      {highlighted ? (
+        <span className="text-lavender-500 animate-lavender-shimmer">
+          {children}
+        </span>
+      ) : (
+        children
+      )}
+    </motion.span>
+  );
 };
 
 export default function About() {
   const shouldReduceMotion = usePrefersReducedMotion();
+  const paragraphRef = useRef<HTMLParagraphElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: paragraphRef,
+    offset: ["start 0.85", "end 0.45"],
+  });
+  let wordIndex = 0;
 
   return (
     <section
@@ -98,10 +124,7 @@ export default function About() {
             </motion.div>
 
             <motion.p
-              initial={shouldReduceMotion ? false : "hidden"}
-              whileInView={shouldReduceMotion ? undefined : "visible"}
-              viewport={{ once: true, amount: 0.2 }}
-              variants={shouldReduceMotion ? undefined : containerVariants}
+              ref={paragraphRef}
               className="font-syne text-3xl font-medium leading-[1.15] tracking-tight text-stone-900 md:text-4xl lg:text-5xl dark:text-cream-100"
             >
               {words.map((word, index) => {
@@ -124,20 +147,19 @@ export default function About() {
                   );
                 }
 
+                const start = wordIndex / totalWords;
+                const end = start + 1 / totalWords;
+                wordIndex += 1;
+
                 return (
-                  <motion.span
+                  <ScrollWord
                     key={`${index}-${word.token}`}
-                    variants={wordVariants}
-                    className="inline-block"
+                    progress={scrollYProgress}
+                    range={[start, end]}
+                    highlighted={word.highlighted}
                   >
-                    {word.highlighted ? (
-                      <span className="text-lavender-500 animate-lavender-shimmer">
-                        {word.token}
-                      </span>
-                    ) : (
-                      word.token
-                    )}
-                  </motion.span>
+                    {word.token}
+                  </ScrollWord>
                 );
               })}
             </motion.p>
