@@ -78,10 +78,10 @@ const tools = [
   },
 ];
 
-const CARD_ENTRY_START = 0.14;
-const CARD_ENTRY_STAGGER = 0.21;
-const CARD_ENTRY_DURATION = 0.21;
-const CARD_ENTRY_FADE = 0.10;
+const CARD_ENTRY_START = 0.06;
+const CARD_ENTRY_STAGGER = 0.225;
+const CARD_ENTRY_DURATION = 0.1;
+const CARD_ENTRY_FADE = 0.05;
 
 const TechStack: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -116,7 +116,7 @@ const TechStack: FC = () => {
     <section
       ref={containerRef}
       className={`relative bg-stone-100/50 dark:bg-stone-900/50 ${
-        shouldReduceMotion ? "" : "h-[240vh]"
+        shouldReduceMotion ? "" : "h-[420vh]"
       }`}
       id="tech-stack"
     >
@@ -194,7 +194,7 @@ const Card = ({
   const y = useTransform(
     progress,
     isFirst ? [0, 1] : [entryStart, entryEnd],
-    isFirst ? ["0%", "0%"] : ["100%", "0%"],
+    isFirst ? ["0%", "0%"] : ["70%", "0%"],
   );
 
   // Dynamic scale down as subsequent cards stack on top
