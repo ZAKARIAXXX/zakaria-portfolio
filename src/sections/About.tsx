@@ -208,10 +208,10 @@ export default function About() {
                 />
                 <div className="relative">
                   <span className="font-syne text-[11px] font-semibold uppercase tracking-[0.3em] text-lavender-500">
-                    Looking for
+                    Current focus
                   </span>
                   <p className="mt-2 font-syne text-xl font-semibold leading-tight text-stone-900 md:text-2xl dark:text-cream-100">
-                    junior backend role or internship
+                    Backend engineering &amp; AppSec
                   </p>
                 </div>
               </motion.div>

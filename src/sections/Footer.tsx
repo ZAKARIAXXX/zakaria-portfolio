@@ -31,12 +31,6 @@ const Footer: FC = () => {
     <footer className="bg-stone-900 dark:bg-night text-white" id="contact">
       <div className="container mx-auto">
         <div className="section py-12 md:py-16 lg:py-20">
-          <div className="flex items-center gap-3">
-            <div className="size-3 rounded-full bg-green-400 animate-pulse"></div>
-            <span className="uppercase text-sm md:text-base">
-              One spot available for next month
-            </span>
-          </div>
           <div className="grid md:grid-cols-3 md:items-center gap-8 mt-8">
             <div className="md:col-span-2">
               <h2 className="text-4xl md:text-7xl lg:text-8xl font-extralight">
