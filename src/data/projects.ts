@@ -9,7 +9,7 @@ import createlistingsImage from "@/assets/images/createlistings.webp";
 import profileImage from "@/assets/images/profile.webp";
 import saveditemsImage from "@/assets/images/saveditems.webp";
 import rentingsImage from "@/assets/images/rentings.webp";
-import waslaImage from "@/assets/images/wasla.webp";
+import waslaImage from "@/assets/images/herowasla.webp";
 import waslaDashboardImage from "@/assets/images/wasladashboard.webp";
 import waslaChatsImage from "@/assets/images/waslachats.webp";
 import waslaAgentImage from "@/assets/images/alldayagentwasla.webp";
@@ -90,6 +90,27 @@ export const projects: Project[] = [
       { image: saveditemsImage, label: "Saved items" },
       { image: rentingsImage, label: "Rentals" },
     ],
+    architecture: {
+      layers: [
+        {
+          name: "Client — React + TypeScript",
+          items: ["React 18 + Vite", "Tailwind CSS + shadcn/ui", "React Router", "TanStack Query", "Framer Motion"],
+        },
+        {
+          name: "Supabase Backend",
+          items: ["PostgreSQL — 14 tables", "Auth — academic email-domain verification", "Storage — listing & rental images", "Realtime — live messaging"],
+        },
+        {
+          name: "Security Layer",
+          items: ["Row Level Security on every table", "is_admin() / is_active_user() policy helpers", "Domain allowlist for student verification"],
+        },
+        {
+          name: "Hosting",
+          items: ["Vercel — frontend", "Supabase Cloud — database, auth, storage"],
+        },
+      ],
+      flow: "A student signs up with an academic email → the domain allowlist verifies them → they list, buy, swap skills, and message in real time → RLS policies guarantee users only ever touch their own data → admins moderate listings, users, and rentals from the dashboard.",
+    },
   },
   {
     name: "Sentinel VAC",
