@@ -30,11 +30,13 @@ type WordToken = {
   token: string;
   highlighted: boolean;
   whitespace: boolean;
+  wordIndex?: number;
 };
 
 const words: WordToken[] = (() => {
   const tokens = ABOUT_COPY.split(/(\s+)/);
   let cursor = 0;
+  let wordCounter = 0;
 
   return tokens.map((token) => {
     const start = cursor;
@@ -45,8 +47,9 @@ const words: WordToken[] = (() => {
       highlightRanges.some(
         (range) => start >= range.start && start < range.end,
       );
+    const wordIndex = whitespace ? undefined : wordCounter++;
 
-    return { token, highlighted, whitespace };
+    return { token, highlighted, whitespace, wordIndex };
   });
 })();
 
@@ -89,7 +92,6 @@ export default function About() {
     target: paragraphRef,
     offset: ["start 0.85", "end 0.45"],
   });
-  let wordIndex = 0;
 
   return (
     <section
@@ -147,9 +149,9 @@ export default function About() {
                   );
                 }
 
-                const start = wordIndex / totalWords;
+                const currentIndex = word.wordIndex ?? 0;
+                const start = currentIndex / totalWords;
                 const end = start + 1 / totalWords;
-                wordIndex += 1;
 
                 return (
                   <ScrollWord
