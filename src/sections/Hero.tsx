@@ -2,7 +2,7 @@
 import { FC, useEffect, useRef } from "react";
 import Image from "next/image";
 import Stars from "@/components/Stars";
-import heroImage from "@/assets/images/hero-image.jpg.jpeg";
+import heroImage from "@/assets/images/hero-image.jpg.png";
 import Button from "@/components/Button";
 import SplitType from "split-type";
 import {
