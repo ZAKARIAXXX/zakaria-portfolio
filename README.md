@@ -1,6 +1,6 @@
 # Zakaria Chelouati — Developer Portfolio
 
-Personal portfolio website for **Zakaria Chelouati**, Backend Software Engineer and final-year Computer Engineering student (Génie Logiciel) at High-Tech Rabat, Salé/Rabat, Morocco.
+Personal portfolio website for **Zakaria Chelouati**, Backend Software Engineer. Licence en Génie Informatique obtained at High-Tech Rabat; now in the Génie Logiciel engineering cycle. Based in Salé/Rabat, Morocco.
 
 Features an interactive developer terminal, real-world project showcases, and a responsive dark/light visual identity.
 
