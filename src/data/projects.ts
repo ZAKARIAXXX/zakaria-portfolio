@@ -194,19 +194,20 @@ export const projects: Project[] = [
     link: "https://github.com/ZAKARIAXXX/wasla",
     category: "AI SaaS / WhatsApp CRM",
     description:
-      "An AI-powered WhatsApp CRM and marketing automation platform built for businesses that sell in Moroccan Darija and French.",
+      "A WhatsApp CRM built for Moroccan businesses that sell in Moroccan Darija and French — v1 shipped, then discontinued in November 2026 when WhatsApp Business policy changes ended the AI-reply model. The codebase is now being rebuilt as a system of record for Moroccan driving schools.",
     challenge:
       "Moroccan SMBs close most of their sales on WhatsApp, but managing hundreds of chats by hand means missed leads, slow replies, and lost revenue. Global CRMs don't solve it — they aren't localized, and they can't parse the Darija/French mix customers actually write in, so automation breaks down exactly where it's needed most.",
     solution:
-      "Designed and built Wasla end to end — a React + TypeScript frontend over a Node.js / Express API (Prisma + PostgreSQL). Karima AI understands, qualifies, and replies to customers in natural Darija and French, working from a knowledge base the business controls. Lead intelligence prioritizes who to answer first; cron-scheduled follow-up sequences re-engage dormant leads automatically; and Socket.io keeps the shared team inbox in sync in real time.",
+      "Designed and built Wasla v1 end to end — a React + TypeScript frontend over a Node.js / Express API (Prisma + PostgreSQL). Karima AI understood, qualified, and replied to customers in natural Darija and French, working from a knowledge base the business controlled; cron-scheduled follow-up sequences re-engaged dormant leads; and Socket.io kept the shared team inbox in sync in real time. In November 2026 the product was re-aimed on the same codebase: v2 is a system of record for driving schools — candidate dossiers with document checklists, a NARSA eligibility rules engine (legal delay, training hours, per-vehicle quota), and conflict-free lesson scheduling.",
     features: [
-      "Karima AI — qualifies leads and replies in Moroccan Darija and French",
+      "Karima AI (v1) — qualified leads and replied in Moroccan Darija and French",
       "Centralized WhatsApp inbox with real-time sync (Socket.io)",
       "Knowledge base — the business's own answers that Karima replies from",
       "Automated follow-up sequences and broadcast campaigns (cron-scheduled)",
       "Contact management with full conversation history",
       "Team collaboration with role-based access (Owner / Admin / Agent)",
       "Trilingual interface — English, French, Darija/Arabic",
+      "v2 (in build) — candidate dossiers, NARSA eligibility engine, conflict-free scheduling",
     ],
     gallery: [
       { image: waslaDashboardImage, label: "Dashboard" },
