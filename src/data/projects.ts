@@ -65,7 +65,7 @@ export const projects: Project[] = [
     link: "https://campusloop-virid-alpha.vercel.app/",
     category: "Marketplace / SaaS",
     description:
-      "A student marketplace and skill-exchange platform for Moroccan universities — buy and sell on campus, swap skills, message in real time, all with verified student accounts.",
+      "A student marketplace and skill-exchange platform for Moroccan universities — buy and sell on campus, swap skills, message in real time, all with verified student accounts. A public demo mode lets anyone explore the real app with sample data — no account needed.",
     challenge:
       "Students had no trusted place to buy, sell, or swap skills on campus. Facebook groups are messy, unverified, and full of scams — no structure, no trust, no way to know who you're dealing with.",
     solution:
@@ -77,6 +77,7 @@ export const projects: Project[] = [
       "Student verification via academic email domain",
       "Admin dashboard for moderation and platform management",
       "Study groups and community spaces",
+      "Public demo mode — the full app with sample data, no sign-up",
       "Mobile-first responsive design",
     ],
     gallery: [
